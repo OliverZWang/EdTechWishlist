@@ -38,10 +38,12 @@ function handleIdeaCreateFormDidSubmit(event){
     const method = myForm.getAttribute("method")
     const xhr = new XMLHttpRequest()
     xhr.open(method, url)
-    console.log("Got here")
+    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+    
     xhr.onload = function(){
         const serverResponse = xhr.response
-        console.log(serverResponse)
+        console.log(xhr.status, serverResponse)
         const ideasEl = document.getElementById("ideas")
         loadIdeas(ideasEl)
     }

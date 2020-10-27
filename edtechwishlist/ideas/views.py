@@ -23,13 +23,18 @@ def idea_list_view(request, *args, **kwargs):
     return JsonResponse(data)
 
 def idea_create_view(request, *args, **kwargs):
+    print("ajax", request.is_ajax())
     form = IdeaForm(request.POST or None)
-    print('post data is ', request.POST)
+    # print('post data is ', request.POST)
     next_url = request.POST.get("next") or None
-    print("next url", next_url)
+    # print("next url", next_url)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
+
+        if request.is_ajax():
+            return JsonResponse({}, status=201) # 201 is usually for created items
+
         if next_url != None:
             # is_safe_url(next_url, ALLOWED_HOSTS)
             return redirect(next_url)
