@@ -14,11 +14,11 @@
 
 <div class='row mb-3'>
     <div class='col-md-4 mx-auto col-10'>
-        <form  mothod='POST' class='form' action='create/'>
+        <form  method='POST' id='idea-create-form' class='form' action='create/'>
             {% csrf_token %}
-            <input type='hidden' value='/ideas' name='next'/>
+            <input type='hidden' value='/ideas/' name='next'/>
             <textarea class='form-control md-4' name='content' placeholder='Your Content'></textarea>
-            <button type='submit' formmethod="post" class='btn btn-primary'>Post</button>
+            <button type='submit' class='btn btn-primary'>Post</button>
         </form>
     </div>
 </div>
@@ -28,6 +28,34 @@
 </div>
 
 <script>
+
+function handleIdeaCreateFormDidSubmit(event){
+    event.preventDefault()
+    
+    const myForm = event.target
+    const myFormData = new FormData(myForm)
+    const url = myForm.getAttribute("action")
+    const method = myForm.getAttribute("method")
+    const xhr = new XMLHttpRequest()
+    xhr.open(method, url)
+    console.log("Got here")
+    xhr.onload = function(){
+        const serverResponse = xhr.response
+        console.log(serverResponse)
+        const ideasEl = document.getElementById("ideas")
+        loadIdeas(ideasEl)
+    }
+    xhr.send(myFormData)
+
+    console.log(url, method)
+
+
+}
+
+const tweetCreateFormEl = document.getElementById("idea-create-form")
+
+tweetCreateFormEl.addEventListener("submit", handleIdeaCreateFormDidSubmit)
+
 const ideasEl = document.getElementById("ideas")
 
 function loadIdeas(ideasElement){
@@ -69,7 +97,7 @@ function wantButton(idea){
 
 function formatIdeaElement(idea){
 
-    var formattedIdea = "<div class='col-12 col-md-10 mx-auto mb-4 border rounded py-3' id='tweet-" + idea.id 
+    var formattedIdea = "<div class='col-12 col-md-10 mx-auto mb-4 border rounded py-3' id='idea-" + idea.id 
     +  "'> <p>" + idea.content
     + "</p><div class='btn-group'>" + wantButton(idea)
     + "</div></div>"
