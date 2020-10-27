@@ -17,7 +17,7 @@
         <form  mothod='POST' class='form' action='create/'>
             {% csrf_token %}
             <input type='hidden' value='/ideas' name='next'/>
-            <textarea class='form-control' name='content' placeholder='Your Content'></textarea>
+            <textarea class='form-control md-4' name='content' placeholder='Your Content'></textarea>
             <button type='submit' formmethod="post" class='btn btn-primary'>Post</button>
         </form>
     </div>
@@ -52,6 +52,7 @@ function loadIdeas(ideasElement){
 
     }
     xhr.send()
+
 }
 
 loadIdeas(ideasEl)
