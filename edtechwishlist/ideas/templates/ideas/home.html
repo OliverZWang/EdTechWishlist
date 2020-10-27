@@ -35,17 +35,31 @@ function handleIdeaCreateFormDidSubmit(event){
     const myForm = event.target
     const myFormData = new FormData(myForm)
     const url = myForm.getAttribute("action")
-    const method = myForm.getAttribute("method")
+
+    const responseType = 'json'
     const xhr = new XMLHttpRequest()
+    xhr.responseType = responseType
+
+    const method = myForm.getAttribute("method")
+    
     xhr.open(method, url)
     xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
     
     xhr.onload = function(){
-        const serverResponse = xhr.response
-        console.log(xhr.status, serverResponse)
-        const ideasEl = document.getElementById("ideas")
-        loadIdeas(ideasEl)
+        if(xhr.status === 201){
+            const newIdeaJson = xhr.response
+            // const newIdeaJson = JSON.parse(newIdea)
+            //console.log(newIdeaJson.wanted)
+            const newIdeaElement = formatIdeaElement(newIdeaJson)
+            console.log(newIdeaElement)
+            const ogHtml = ideasContainerElement.innerHTML
+            ideasContainerElement.innerHTML = newIdeaElement + ogHtml
+        }
+
+
+        // const ideasEl = document.getElementById("ideas")
+        // loadIdeas(ideasEl)
     }
     xhr.send(myFormData)
 
@@ -54,18 +68,17 @@ function handleIdeaCreateFormDidSubmit(event){
 
 }
 
-const tweetCreateFormEl = document.getElementById("idea-create-form")
+const ideaCreateFormEl = document.getElementById("idea-create-form")
 
-tweetCreateFormEl.addEventListener("submit", handleIdeaCreateFormDidSubmit)
+ideaCreateFormEl.addEventListener("submit", handleIdeaCreateFormDidSubmit)
 
-const ideasEl = document.getElementById("ideas")
+const ideasContainerElement = document.getElementById("ideas")
 
 function loadIdeas(ideasElement){
     const xhr = new XMLHttpRequest()
     const method = 'GET'
     const url = '/ideas/list/'
     const responseType = 'json'
-
     xhr.responseType = responseType
     xhr.open(method, url)
     xhr.onload = function(){
@@ -85,7 +98,7 @@ function loadIdeas(ideasElement){
 
 }
 
-loadIdeas(ideasEl)
+loadIdeas(ideasContainerElement)
 
 function handleDidWant(ideaId, currentWanted){
     console.log(ideaId, currentWanted)
@@ -93,7 +106,7 @@ function handleDidWant(ideaId, currentWanted){
 }
 
 function wantButton(idea){
-    return "<button class='btn btn-primary' onclick=handleDidWant("+idea.id + ","+ idea.numWanted + ")> Wanted by " + idea.numWanted + "</button>"
+    return "<button class='btn btn-primary' onclick=handleDidWant("+idea.id + ","+ idea.wanted + ")> Wanted by " + idea.wanted + "</button>"
 }
 
 

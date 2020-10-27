@@ -4,3 +4,11 @@ from django.db import models
 class Idea(models.Model):
     content = models.TextField(blank=True, null=True)
     image = models.FileField(upload_to='image/', blank=True, null=True)
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "content": self.content,
+            "wanted": 1
+
+        }

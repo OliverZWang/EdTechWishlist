@@ -15,7 +15,7 @@ def idea_list_view(request, *args, **kwargs):
     # REST API VIEW
     # return JSON data
     qs = Idea.objects.all()
-    idea_list = [{"id": x.id, "content": x.content, "numWanted": random.randint(0, 50)} for x in qs]
+    idea_list = [x.serialize() for x in qs]
     
     data = {
         "response": idea_list
@@ -33,7 +33,8 @@ def idea_create_view(request, *args, **kwargs):
         obj.save()
 
         if request.is_ajax():
-            return JsonResponse({}, status=201) # 201 is usually for created items
+            print("serialized response: ", JsonResponse(obj.serialize(), status=201))
+            return JsonResponse(obj.serialize(), status=201) # 201 is usually for created items
 
         if next_url != None:
             # is_safe_url(next_url, ALLOWED_HOSTS)
