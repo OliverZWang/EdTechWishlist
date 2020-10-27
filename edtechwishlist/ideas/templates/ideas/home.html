@@ -17,7 +17,7 @@
         <form  method='POST' id='idea-create-form' class='form' action='create/'>
             {% csrf_token %}
             <input type='hidden' value='/ideas/' name='next'/>
-            <textarea class='form-control md-4' name='content' placeholder='Your Content'></textarea>
+            <textarea required='required' class='form-control md-4' name='content' placeholder='Your Content'></textarea>
             <button type='submit' class='btn btn-primary'>Post</button>
         </form>
     </div>
@@ -48,16 +48,22 @@ function handleIdeaCreateFormDidSubmit(event){
     
     xhr.onload = function(){
         if(xhr.status === 201){
+
+            //get JSON response from idea_create_view
             const newIdeaJson = xhr.response
             // const newIdeaJson = JSON.parse(newIdea)
             //console.log(newIdeaJson.wanted)
+
+            //map the JSON object into the format
             const newIdeaElement = formatIdeaElement(newIdeaJson)
             console.log(newIdeaElement)
+
+            // prepending the tweets
             const ogHtml = ideasContainerElement.innerHTML
             ideasContainerElement.innerHTML = newIdeaElement + ogHtml
+
+            myForm.reset()
         }
-
-
         // const ideasEl = document.getElementById("ideas")
         // loadIdeas(ideasEl)
     }
@@ -68,11 +74,22 @@ function handleIdeaCreateFormDidSubmit(event){
 
 }
 
-const ideaCreateFormEl = document.getElementById("idea-create-form")
 
+// get the crate form and hand the submit event
+const ideaCreateFormEl = document.getElementById("idea-create-form")
 ideaCreateFormEl.addEventListener("submit", handleIdeaCreateFormDidSubmit)
 
 const ideasContainerElement = document.getElementById("ideas")
+
+//display ideas from the database
+function formatIdeaElement(idea){
+
+    var formattedIdea = "<div class='col-12 col-md-10 mx-auto mb-4 border rounded py-3' id='idea-" + idea.id 
+    +  "'> <p>" + idea.content
+    + "</p><div class='btn-group'>" + wantButton(idea)
+    + "</div></div>"
+    return formattedIdea
+}
 
 function loadIdeas(ideasElement){
     const xhr = new XMLHttpRequest()
@@ -108,17 +125,6 @@ function handleDidWant(ideaId, currentWanted){
 function wantButton(idea){
     return "<button class='btn btn-primary' onclick=handleDidWant("+idea.id + ","+ idea.wanted + ")> Wanted by " + idea.wanted + "</button>"
 }
-
-
-function formatIdeaElement(idea){
-
-    var formattedIdea = "<div class='col-12 col-md-10 mx-auto mb-4 border rounded py-3' id='idea-" + idea.id 
-    +  "'> <p>" + idea.content
-    + "</p><div class='btn-group'>" + wantButton(idea)
-    + "</div></div>"
-    return formattedIdea
-}
-
 
 
 </script>
