@@ -64,9 +64,21 @@ function handleIdeaCreateFormDidSubmit(event){
 
             myForm.reset()
         }
+        else if(xhr.status === 400){
+            const errorJson = xhr.response
+            console.log(errorJson)
+        }
+        else if(xhr.status === 500){
+            alert("A server error occurred. ")
+        }
         // const ideasEl = document.getElementById("ideas")
         // loadIdeas(ideasEl)
     }
+
+    xhr.onerror= function(){
+        alert("An error occurred. Please try again later. ")
+    }
+
     xhr.send(myFormData)
 
     console.log(url, method)

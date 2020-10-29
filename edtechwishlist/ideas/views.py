@@ -41,6 +41,9 @@ def idea_create_view(request, *args, **kwargs):
             return redirect(next_url)
         
         form = IdeaForm()
+    if form.errors:
+        if request.is_ajax():
+            return JsonResponse(form.errors, status=400)
     return render(request, 'ideas/form.html', context={"form": form})
 
 def home_view(request, *args, **kwargs):
