@@ -16,6 +16,7 @@
     <div class='col-md-4 mx-auto col-10'>
         <form  method='POST' id='idea-create-form' class='form' action='create/'>
             {% csrf_token %}
+            <div class='d-none alert alert-danger' id='idea-create-form-error'></div>
             <input type='hidden' value='/ideas/' name='next'/>
             <textarea required='required' class='form-control md-4' name='content' placeholder='Your Content'></textarea>
             <button type='submit' class='btn btn-primary'>Post</button>
@@ -28,6 +29,20 @@
 </div>
 
 <script>
+
+function handleIdeaFormError(msg, display){
+    var myErrorDiv = document.getElementById("idea-create-form-error")
+    if (display === true){
+        //show error
+        myErrorDiv.setAttribute("class", "d-block alert, alert-danger")
+        myErrorDiv.innerText = msg
+    }
+    else{
+        //hide error
+        myErrorDiv.setAttribute("class", "d-none alert alerg-danger")
+    }
+}
+
 
 function handleIdeaCreateFormDidSubmit(event){
     event.preventDefault()
@@ -48,7 +63,7 @@ function handleIdeaCreateFormDidSubmit(event){
     
     xhr.onload = function(){
         if(xhr.status === 201){
-
+            handleIdeaFormError("", false)
             //get JSON response from idea_create_view
             const newIdeaJson = xhr.response
             // const newIdeaJson = JSON.parse(newIdea)
@@ -66,7 +81,21 @@ function handleIdeaCreateFormDidSubmit(event){
         }
         else if(xhr.status === 400){
             const errorJson = xhr.response
-            console.log(errorJson)
+            const contentError = errorJson.content
+            let contentErrorMsg; 
+            if(contentError){
+                contentErrorMsg = contentError[0]
+                if(contentErrorMsg){
+                    handleIdeaFormError(contentErrorMsg, true)
+                }
+                else{
+                    alert("An error occurred. ")
+                }
+            }
+            else{
+                alert("An error occured. ")
+            }
+
         }
         else if(xhr.status === 500){
             alert("A server error occurred. ")
