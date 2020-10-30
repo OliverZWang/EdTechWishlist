@@ -23,13 +23,25 @@ def idea_list_view(request, *args, **kwargs):
     return JsonResponse(data)
 
 def idea_create_view(request, *args, **kwargs):
+    '''
+    REST API create view
+    '''
+    user = request.user
+    if not request.user.is_authenticated:
+        user = None
+        if request.is_ajax():
+            return JsonResponse({}, status=401)
+        return redirect(settings.LOGIN_URL)
+
     print("ajax", request.is_ajax())
     form = IdeaForm(request.POST or None)
     # print('post data is ', request.POST)
     next_url = request.POST.get("next") or None
     # print("next url", next_url)
     if form.is_valid():
+        
         obj = form.save(commit=False)
+        obj.user = user
         obj.save()
 
         if request.is_ajax():

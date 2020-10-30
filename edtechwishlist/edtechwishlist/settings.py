@@ -26,7 +26,7 @@ SECRET_KEY = 'h3ke!4249-00&^7b%ajs4%jf_9asm3x3kyt=971d)47un_n=s('
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGIN_URL = '/login'
 
 # Application definition
 
@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'users',
-    'ideas'
+    'ideas',
+
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

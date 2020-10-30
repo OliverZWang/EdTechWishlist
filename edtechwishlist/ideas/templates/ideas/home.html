@@ -63,7 +63,10 @@ function handleIdeaCreateFormDidSubmit(event){
     
     xhr.onload = function(){
         if(xhr.status === 201){
+
+            //this turns off the error message from a previous request
             handleIdeaFormError("", false)
+            
             //get JSON response from idea_create_view
             const newIdeaJson = xhr.response
             // const newIdeaJson = JSON.parse(newIdea)
@@ -95,7 +98,11 @@ function handleIdeaCreateFormDidSubmit(event){
             else{
                 alert("An error occured. ")
             }
-
+            
+        }
+        else if(xhr.status === 401){
+            alert("You must login ")
+            window.location.href = "/login"
         }
         else if(xhr.status === 500){
             alert("A server error occurred. ")
