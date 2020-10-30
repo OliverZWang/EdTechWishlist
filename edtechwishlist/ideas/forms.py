@@ -1,8 +1,9 @@
 from django import forms
-
+from django.conf import settings
 from .models import Idea
 
-MAX_LENGTH = 1500
+MAX_LENGTH = settings.MAX_LENGTH
+
 class IdeaForm(forms.ModelForm):
     class Meta:
         model = Idea
