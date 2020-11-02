@@ -3,11 +3,14 @@ from django.http import HttpResponse, Http404, JsonResponse
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
-from rest_framework.decorators import api_view
+
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Idea
 from .forms import IdeaForm
-from .serializers import IdeaSerializer
+from .serializers import IdeaSerializer, IdeaActionSerializer
 # Create your views here.
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
@@ -20,6 +23,48 @@ def idea_detail_view(request, idea_id, *args, **kwargs):
     obj = qs.first()
     serializer = IdeaSerializer(obj)
     return Response(serializer.data, status=200)
+
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
+def idea_action_view(request, *args, **kwargs):
+    # actions are want, unwant
+    print(request.POST, request.data)
+    serializer = IdeaActionSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        data = serializer.validated_data
+        idea_id = data.get("id")
+        action = data.get("action")
+
+        qs = Idea.objects.filter(id=idea_id)
+        if not qs.exists():
+            return Response({}, status=404)
+        obj = qs.first()
+        if action == "want":
+            obj.wanted.add(request.user)
+            serializer = IdeaSerializer(obj)
+            return Response(serializer.data, status=200)
+        elif action == "unwant":
+            obj.wanted.remove(request.user)
+
+            
+
+    
+    return Response({}, status=200)
+
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
+def idea_delete_view(request, idea_id, *args, **kwargs):
+    qs = Idea.objects.filter(id=idea_id)
+    if not qs.exists():
+        return Response({}, status=404)
+
+    # check if it's the same user deleting
+    qs = qs.filter(user=request.user)
+    if not qs.exists():
+        return Response({"message": "You cannot delete this tweet"}, status=401)
+    obj = qs.first()
+    obj.delete()
+    return Response({"memmsage": "The idea has been removed. "}, status=200)
 
 @api_view(['GET'])
 def idea_list_view(request, *args, **kwargs):
@@ -42,6 +87,8 @@ def idea_list_view_pure_django(request, *args, **kwargs):
 # http method the client == post
 # No longer rendering a form. Just accepting post data
 @api_view(['POST'])
+# @authentication_classes([SessionAuthentication, MyCustomAuth])
+@permission_classes([IsAuthenticated])
 def idea_create_view(request, *args, **kwargs):
 
     serializer = IdeaSerializer(data=request.POST or None)

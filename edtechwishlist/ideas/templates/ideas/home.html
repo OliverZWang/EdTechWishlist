@@ -30,6 +30,25 @@
 
 <script>
 
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+
 function handleIdeaFormError(msg, display){
     var myErrorDiv = document.getElementById("idea-create-form-error")
     if (display === true){
@@ -107,6 +126,9 @@ function handleIdeaCreateFormDidSubmit(event){
         else if(xhr.status === 500){
             alert("A server error occurred. ")
         }
+        else if(xhr.status === 403){
+            alert("You Must Log In")
+        }
         // const ideasEl = document.getElementById("ideas")
         // loadIdeas(ideasEl)
     }
@@ -135,6 +157,7 @@ function formatIdeaElement(idea){
     var formattedIdea = "<div class='col-12 col-md-10 mx-auto mb-4 border rounded py-3' id='idea-" + idea.id 
     +  "'> <p>" + idea.content
     + "</p><div class='btn-group'>" + wantButton(idea)
+    + unwantButton(idea)
     + "</div></div>"
     return formattedIdea
 }
@@ -165,13 +188,36 @@ function loadIdeas(ideasElement){
 
 loadIdeas(ideasContainerElement)
 
-function handleDidWant(ideaId, currentWanted){
+function handleIdeaActionBtn(ideaId, currentWanted, action){
     console.log(ideaId, currentWanted)
+    const url = "action/"
+    const method = "POST"
+    const data = JSON.stringify({
+        id: ideaId,
+        action: action
+    })
+    const xhr = new XMLHttpRequest()
+    const csrftoken = getCookie('csrftoken');
+    xhr.open(method, url)
+    xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+    xhr.onload = function(){
+        // console.log(xhr.status, xhr.response)
+        // better to use react.js to handle the states
+        loadIdeas(ideasContainerElement)
+    }
+    xhr.send(data)
+    return
+}
 
+function unwantButton(idea){
+    return "<button class='btn btn-outline-primary' onclick=handleIdeaActionBtn("+idea.id + ","+ idea.wanted + ",'unwant')> Unwant </button>"
 }
 
 function wantButton(idea){
-    return "<button class='btn btn-primary' onclick=handleDidWant("+idea.id + ","+ idea.wanted + ")> Wanted by " + idea.wanted + "</button>"
+    return "<button class='btn btn-primary' onclick=handleIdeaActionBtn("+idea.id + ","+ idea.wanted + ",'want')> Wanted by " + idea.wanted + "</button>"
 }
 
 
