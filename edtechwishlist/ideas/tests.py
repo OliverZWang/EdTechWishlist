@@ -6,7 +6,9 @@ import json
 
 from .models import Idea
 # Create your tests here.
+
 User = get_user_model()
+
 class TweetTestCase(TestCase):
 
     def setUp(self):
