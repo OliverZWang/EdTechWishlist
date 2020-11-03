@@ -1,12 +1,10 @@
 from django.contrib import admin
-from .models import Idea, IdeaLike
+from .models import Idea
 
 # Register your models here.
-class IdeaLikeAdmin(admin.TabularInline):
-    model = IdeaLike
+
 
 class IdeaAdmin(admin.ModelAdmin):
-    inlines = [IdeaLikeAdmin]
     list_display = ['__str__', 'user']
     search_fields = ['content','user__name', 'user__email']
     class Meta:
