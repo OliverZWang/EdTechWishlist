@@ -12,22 +12,22 @@ from .serializers import IdeaSerializer
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
-@api_view(['GET'])
-def idea_detail_view(request, idea_id, *args, **kwargs):
-    qs = Idea.objects.filter(id=idea_id)
-    if not qs.exists():
-        return Response({}, status=404)
-    obj = qs.first()
-    serializer = IdeaSerializer(obj)
-    return Response(serializer.data, status=200)
+# @api_view(['GET'])
+# def idea_detail_view(request, idea_id, *args, **kwargs):
+#     qs = Idea.objects.filter(id=idea_id)
+#     if not qs.exists():
+#         return Response({}, status=404)
+#     obj = qs.first()
+#     serializer = IdeaSerializer(obj)
+#     return Response(serializer.data, status=200)
 
-@api_view(['GET'])
+# @api_view(['GET'])
+# def idea_list_view(request, *args, **kwargs):
+#     qs = Idea.objects.all()
+#     serializer = IdeaSerializer(qs, many=True)
+#     return Response(serializer.data, status=200)
+
 def idea_list_view(request, *args, **kwargs):
-    qs = Idea.objects.all()
-    serializer = IdeaSerializer(qs, many=True)
-    return Response(serializer.data, status=200)
-
-def idea_list_view_pure_django(request, *args, **kwargs):
 
     # REST API VIEW
     # return JSON data
@@ -41,17 +41,17 @@ def idea_list_view_pure_django(request, *args, **kwargs):
 
 # http method the client == post
 # No longer rendering a form. Just accepting post data
-@api_view(['POST'])
+# @api_view(['POST'])
+# def idea_create_view(request, *args, **kwargs):
+
+#     serializer = IdeaSerializer(data=request.POST or None)
+#     if serializer.is_valid(raise_exception=True):
+#         serializer.save(user=request.user)
+#         return Response(serializer.data, status=201)
+#         # serializer.save()
+#     return Response({}, status=400)
+
 def idea_create_view(request, *args, **kwargs):
-
-    serializer = IdeaSerializer(data=request.POST or None)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=request.user)
-        return Response(serializer.data, status=201)
-        # serializer.save()
-    return Response({}, status=400)
-
-def idea_create_view_pure_django(request, *args, **kwargs):
     '''
     REST API create view
     '''
@@ -91,7 +91,7 @@ def home_view(request, *args, **kwargs):
     # return HttpResponse("<h1>Hello World</h1>")
     return render(request, "ideas/home.html", context={}, status=200)
 
-def idea_detail_view_pure_django(request, idea_id, *args, **kwargs):
+def idea_detail_view(request, idea_id, *args, **kwargs):
     
     # rest API view
     # return JSON data
