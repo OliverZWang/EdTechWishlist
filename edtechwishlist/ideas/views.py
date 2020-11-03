@@ -72,25 +72,25 @@ def idea_list_view(request, *args, **kwargs):
     serializer = IdeaSerializer(qs, many=True)
     return Response(serializer.data, status=200)
 
-def idea_list_view_pure_django(request, *args, **kwargs):
+# def idea_list_view_pure_django(request, *args, **kwargs):
 
-    # REST API VIEW
-    # return JSON data
-    qs = Idea.objects.all()
-    idea_list = [x.serialize() for x in qs]
+#     # REST API VIEW
+#     # return JSON data
+#     qs = Idea.objects.all()
+#     idea_list = [x.serialize() for x in qs]
     
-    data = {
-        "response": idea_list
-    }
-    return JsonResponse(data)
+#     data = {
+#         "response": idea_list
+#     }
+#     return JsonResponse(data)
 
 # http method the client == post
 # No longer rendering a form. Just accepting post data
 @api_view(['POST'])
-# @authentication_classes([SessionAuthentication, MyCustomAuth])
+# @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
 def idea_create_view(request, *args, **kwargs):
-
+    print("request:", request)
     serializer = IdeaSerializer(data=request.POST or None)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
@@ -98,41 +98,42 @@ def idea_create_view(request, *args, **kwargs):
         # serializer.save()
     return Response({}, status=400)
 
-def idea_create_view_pure_django(request, *args, **kwargs):
-    '''
-    REST API create view
-    '''
-    user = request.user
-    if not request.user.is_authenticated:
-        user = None
-        if request.is_ajax():
-            return JsonResponse({}, status=401)
-        return redirect(settings.LOGIN_URL)
+# PURE DJANGO IDEA CREATE VIEW
+# def idea_create_view(request, *args, **kwargs):
+#     '''
+#     REST API create view
+#     '''
+#     user = request.user
+#     if not request.user.is_authenticated:
+#         user = None
+#         if request.is_ajax():
+#             return JsonResponse({}, status=401)
+#         return redirect(settings.LOGIN_URL)
 
-    print("ajax", request.is_ajax())
-    form = IdeaForm(request.POST or None)
-    # print('post data is ', request.POST)
-    next_url = request.POST.get("next") or None
-    # print("next url", next_url)
-    if form.is_valid():
+#     print("ajax", request.is_ajax())
+#     form = IdeaForm(request.POST or None)
+#     # print('post data is ', request.POST)
+#     next_url = request.POST.get("next") or None
+#     # print("next url", next_url)
+#     if form.is_valid():
         
-        obj = form.save(commit=False)
-        obj.user = user
-        obj.save()
+#         obj = form.save(commit=False)
+#         obj.user = user
+#         obj.save()
 
-        if request.is_ajax():
-            print("serialized response: ", JsonResponse(obj.serialize(), status=201))
-            return JsonResponse(obj.serialize(), status=201) # 201 is usually for created items
+#         if request.is_ajax():
+#             print("serialized response: ", JsonResponse(obj.serialize(), status=201))
+#             return JsonResponse(obj.serialize(), status=201) # 201 is usually for created items
 
-        if next_url != None:
-            # is_safe_url(next_url, ALLOWED_HOSTS)
-            return redirect(next_url)
+#         if next_url != None:
+#             # is_safe_url(next_url, ALLOWED_HOSTS)
+#             return redirect(next_url)
         
-        form = IdeaForm()
-    if form.errors:
-        if request.is_ajax():
-            return JsonResponse(form.errors, status=400)
-    return render(request, 'ideas/form.html', context={"form": form})
+#         form = IdeaForm()
+#     if form.errors:
+#         if request.is_ajax():
+#             return JsonResponse(form.errors, status=400)
+#     return render(request, 'ideas/form.html', context={"form": form})
 
 def home_view(request, *args, **kwargs):
     # return HttpResponse("<h1>Hello World</h1>")

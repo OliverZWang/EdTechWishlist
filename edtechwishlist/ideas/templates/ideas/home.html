@@ -82,7 +82,7 @@ function handleIdeaCreateFormDidSubmit(event){
     
     xhr.onload = function(){
         if(xhr.status === 201){
-
+            
             //this turns off the error message from a previous request
             handleIdeaFormError("", false)
             
@@ -102,6 +102,7 @@ function handleIdeaCreateFormDidSubmit(event){
             myForm.reset()
         }
         else if(xhr.status === 400){
+            
             const errorJson = xhr.response
             const contentError = errorJson.content
             let contentErrorMsg; 
@@ -129,6 +130,10 @@ function handleIdeaCreateFormDidSubmit(event){
         else if(xhr.status === 403){
             alert("You Must Log In")
         }
+        else{
+            console.log("Got ehre")
+        }
+        
         // const ideasEl = document.getElementById("ideas")
         // loadIdeas(ideasEl)
     }
@@ -136,7 +141,7 @@ function handleIdeaCreateFormDidSubmit(event){
     xhr.onerror= function(){
         alert("An error occurred. Please try again later. ")
     }
-
+    console.log("my form data is " + myFormData)
     xhr.send(myFormData)
 
     console.log(url, method)
@@ -165,7 +170,7 @@ function formatIdeaElement(idea){
 function loadIdeas(ideasElement){
     const xhr = new XMLHttpRequest()
     const method = 'GET'
-    const url = '/ideas/list/'
+    const url = '/api/ideas/list/'
     const responseType = 'json'
     xhr.responseType = responseType
     xhr.open(method, url)
