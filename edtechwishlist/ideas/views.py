@@ -62,20 +62,21 @@ def idea_create_view(request, *args, **kwargs):
             return JsonResponse({}, status=401)
         return redirect(settings.LOGIN_URL)
 
-    print("ajax", request.is_ajax())
+
     form = IdeaForm(request.POST or None)
-    # print('post data is ', request.POST)
+    print("request:", request.POST['content'])
+
     next_url = request.POST.get("next") or None
-    # print("next url", next_url)
+
     if form.is_valid():
         
         obj = form.save(commit=False)
         obj.user = user
         obj.save()
 
-        if request.is_ajax():
-            print("serialized response: ", JsonResponse(obj.serialize(), status=201))
-            return JsonResponse(obj.serialize(), status=201) # 201 is usually for created items
+        # if request.is_ajax():
+        # print("serialized response: ", JsonResponse(obj.serialize(), status=201))
+        return JsonResponse(obj.serialize(), status=201) # 201 is usually for created items
 
         if next_url != None:
             # is_safe_url(next_url, ALLOWED_HOSTS)
@@ -85,7 +86,8 @@ def idea_create_view(request, *args, **kwargs):
     if form.errors:
         if request.is_ajax():
             return JsonResponse(form.errors, status=400)
-    return render(request, 'ideas/form.html', context={"form": form})
+    return JsonResponse({"message": "form not valid. No errors caught"})
+    # return render(request, 'ideas/form.html', context={"form": form})
 
 def home_view(request, *args, **kwargs):
     # return HttpResponse("<h1>Hello World</h1>")
@@ -110,3 +112,20 @@ def idea_detail_view(request, idea_id, *args, **kwargs):
         status = 404
 
     return JsonResponse(data, status=status)
+
+def idea_delete_view(request, idea_id, *args, **kwargs):
+
+    qs = Idea.objects.filter(id=idea_id)
+
+    if not qs.exists():
+        return JsonResponse({"message": "The idea you're trying to delete is not found"}, status=404)
+
+    qs = qs.filter(user=request.user)
+
+    if not qs.exists():
+        return JsonResponse({"message": "You cannot delete someone else's idea!"}, status=401)
+
+    obj = qs.first()
+    obj.delete()
+
+    return JsonResponse({"message": "The idea has been deleted."}, status=200)

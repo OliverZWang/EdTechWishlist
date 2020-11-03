@@ -21,6 +21,6 @@ class Idea(models.Model):
         return{
             "id": self.id,
             "content": self.content,
-            "wanted": 1
+            # "wanted": 1
 
         }
