@@ -23,10 +23,17 @@ export function IdeasList(props){
     })
 }
 
-export function DeleteButton(props){
-    // const {idea} = props
+export function ActionButton(props){
+    const {idea, action} = props
     const className = props.className ? props.className : 'btn btn-primary btn-sm'
-    return <button className={className}>Delete</button>
+    const actionDisplay = action.display ? action.display : 'Action'
+    const handleClick = (event) =>{
+        event.preventDefault()
+        if (action.type === 'delete'){
+            console.log("Trying to delete the idea")
+        }
+    }
+    return <button className={className} onClick={handleClick} >{actionDisplay}</button>
 }
 
 export function Idea(props){
@@ -35,7 +42,9 @@ export function Idea(props){
     return <div className={className}>
         <p>{idea.id} - {idea.content} - {idea.user}</p>
         <div>
-            <DeleteButton idea={idea} />
+            <ActionButton idea={idea} action={{type: "delete", display: "Delete"}} />
+            <br/>
+            <ActionButton idea={idea} action={{type: "comment", display: "Comment"}} />
         </div>
     </div>
 }

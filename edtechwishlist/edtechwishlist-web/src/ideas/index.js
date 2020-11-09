@@ -1,7 +1,7 @@
-import {DeleteButton, Idea, IdeasList} from './components'
+import {ActionButton, Idea, IdeasList} from './components'
 
 export {
-    DeleteButton,
+    ActionButton,
     Idea,
     IdeasList
 }
