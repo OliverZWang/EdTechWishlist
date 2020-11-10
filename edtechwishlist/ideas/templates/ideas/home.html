@@ -12,7 +12,9 @@
     </div>
 </div>
 
-<div class='row mb-3'>
+<div id='edtech-wishlist'></div>
+
+<div class='row mb-3 d-none'>
     <div class='col-md-4 mx-auto col-10'>
         <form  method='POST' id='idea-create-form' class='form' action='create/'>
             {% csrf_token %}
@@ -24,7 +26,9 @@
     </div>
 </div>
 
-<div class='row' id="ideas">
+
+
+<div class='row d-none' id="ideas">
     Loading...
 </div>
 
