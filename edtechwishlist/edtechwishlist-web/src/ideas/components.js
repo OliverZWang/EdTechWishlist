@@ -39,6 +39,7 @@ export function IdeasList(props){
 
     // const [ideasInit, setIdeasInit] = useState([])
     const [ideas, setIdeas] = useState([])
+    const [ideasDidSet, setIdeasDidSet] = useState(false)
     // setIdeasInit([...props.newIdeas].concat(ideasInit))
     // console.log(props.newIdeas)
     // useEffect(()=>{
@@ -49,17 +50,20 @@ export function IdeasList(props){
         
     // }, [props.newIdeas, ideas, ideasInit])
     useEffect(() => {
-        const myCallback = (response, status) => {
-        //   console.log(response, status)
-          if (status === 200){
-            //   const finalIdeasInit = [...response].concat(ideasInit)
-            setIdeas(response)
-          } else {
-            alert("There was an error")
-          }
+        if (ideasDidSet === false){
+            const myCallback = (response, status) => {
+            //   console.log(response, status)
+            if (status === 200){
+                //   const finalIdeasInit = [...response].concat(ideasInit)
+                setIdeas(response)
+                setIdeasDidSet(true)
+            } else {
+                alert("There was an error")
+            }
+            }
+            loadIdeas(myCallback)
         }
-        loadIdeas(myCallback)
-      }, [ideas])
+      }, [ideas, ideasDidSet, setIdeasDidSet])
 
       return ideas.map((item, index)=>{
         return <Idea idea={item} className='my-5 py-5 border' key={`${index}-{item.id}`}/>
