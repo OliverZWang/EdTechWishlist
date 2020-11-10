@@ -1,6 +1,31 @@
 import React, {useEffect, useState} from 'react'
 
+
 import {loadIdeas} from '../lookup'
+
+export function IdeasComponent(props){
+
+    const textAreaRef = React.createRef()
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        const newValue = textAreaRef.current.value
+        console.log(newValue)
+        textAreaRef.current.value = ''
+    }
+
+    return <div className={props.className}>
+        <div className='col-12 mb-3'>
+            <form onSubmit={handleSubmit}>
+                <textarea ref={textAreaRef} required={true} className='form-control' name='idea'>
+
+                </textarea>
+                <button type='submit' className='btn btn-primary my-3'>Post Idea</button>
+            </form>
+        </div>
+        <IdeasList/>
+    </div> 
+}
 
 export function IdeasList(props){
 
@@ -25,15 +50,19 @@ export function IdeasList(props){
 
 export function ActionButton(props){
     const {idea, action} = props
+    // const [justClicked, setJustClicked] = useState(1)
     const className = props.className ? props.className : 'btn btn-primary btn-sm'
     const actionDisplay = action.display ? action.display : 'Action'
     const handleClick = (event) =>{
         event.preventDefault()
         if (action.type === 'delete'){
             console.log("Trying to delete the idea")
+            
+            // setJustClicked(justClicked+1)
+            
         }
     }
-    return <button className={className} onClick={handleClick} >{actionDisplay}</button>
+return <button className={className} onClick={handleClick} >{actionDisplay} </button>
 }
 
 export function Idea(props){

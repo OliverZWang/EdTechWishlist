@@ -3,7 +3,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import {IdeasList} from './ideas'
+import {IdeasComponent} from './ideas'
 
 function App() {
     
@@ -19,7 +19,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-            <IdeasList/>
+            <IdeasComponent/>
         </div>
         <a
           className="App-link"
