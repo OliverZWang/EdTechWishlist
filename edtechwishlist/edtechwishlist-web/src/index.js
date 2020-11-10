@@ -3,13 +3,30 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {IdeasComponent} from './ideas'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+
+const appElement = document.getElementById("root")
+if(appElement){
+    ReactDOM.render(
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>,
+        appElement
+      );
+}
+
+const ideasElement = document.getElementById("edtech-wishlist")
+if(ideasElement){  
+    ReactDOM.render(
+        <React.StrictMode>
+          <IdeasComponent />
+        </React.StrictMode>,
+        ideasElement
+      );
+}
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

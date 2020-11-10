@@ -9,7 +9,7 @@ export function loadIdeas(callback){
     xhr.responseType = responseType
     xhr.open(method, url)
     xhr.onload = function(){
-        console.log("Response is"+xhr.response['response'])
+        // console.log("Response is"+xhr.response['response'])
         callback(xhr.response["response"], xhr.status)
 
     }
