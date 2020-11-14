@@ -14,7 +14,7 @@
 
 <div id='edtech-wishlist'></div>
 
-<div class='row mb-3 d-none'>
+<div class='row mb-3'>
     <div class='col-md-4 mx-auto col-10'>
         <form  method='POST' id='idea-create-form' class='form' action='create/'>
             {% csrf_token %}
@@ -28,7 +28,7 @@
 
 
 
-<div class='row d-none' id="ideas">
+<div class='row' id="ideas">
     Loading...
 </div>
 
@@ -52,6 +52,7 @@ function handleIdeaCreateFormDidSubmit(event){
     event.preventDefault()
     
     const myForm = event.target
+    console.log("myForm:" + myForm)
     const myFormData = new FormData(myForm)
     const url = myForm.getAttribute("action")
 
@@ -144,6 +145,7 @@ function formatIdeaElement(idea){
 }
 
 function loadIdeas(ideasElement){
+    {% comment %} console.log('loading ideas') {% endcomment %}
     const xhr = new XMLHttpRequest()
     const method = 'GET'
     const url = '/ideas/list/'
@@ -153,13 +155,15 @@ function loadIdeas(ideasElement){
     xhr.onload = function(){
         const serverResponse = xhr.response
 
-        var listedItems = serverResponse.response
+        // var listedItems = serverResponse.response
+        var listedItems = serverResponse
         var finalIdeaStr = ""
         var i;
         console.log(listedItems.length)
         for (i=0; i < listedItems.length; i++){
             var ideaObject = listedItems[i]
             var currentItem = formatIdeaElement(ideaObject)
+            console.log(currentItem)
 
             finalIdeaStr += currentItem
         }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
 
-import {loadIdeas} from '../lookup'
+import {createIdea, loadIdeas} from '../lookup'
 
 export function IdeasComponent(props){
 
@@ -11,6 +11,15 @@ export function IdeasComponent(props){
         event.preventDefault()
         const newValue = textAreaRef.current.value
         console.log(newValue)
+        createIdea(newValue, (response, status)=>{
+            if(status === 201){
+                console.log("New Idea Created")
+            }
+            else{
+                console.log(response)
+                console.log("An error has occurred")
+            }
+        })
         // let tempNewIdeas = [...newIdeas]
         //unshift put the new idea on top
         //TO DO: Change this to a server side call

@@ -1,5 +1,6 @@
-import {loadIdeas} from './components'
+import {loadIdeas, createIdea} from './components'
 
 export {
-    loadIdeas
+    loadIdeas,
+    createIdea
 }

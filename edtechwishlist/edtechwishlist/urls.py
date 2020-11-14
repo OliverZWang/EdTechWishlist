@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('ideas/', include('ideas.urls')),
-    path('react/', TemplateView.as_view(template_name='react_via_dj.html'))
+    # path('react/', TemplateView.as_view(template_name='react_via_dj.html'))
 ]
 
 if settings.DEBUG: 
