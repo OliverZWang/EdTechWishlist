@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react'
-
+// useEffect: run HTTP request, do a lookup on server
 
 import {createIdea, loadIdeas} from '../lookup'
 
 export function IdeasComponent(props){
 
     const textAreaRef = React.createRef()
+
+    // newIdeas is the actual variable to use for the state
+    // 
     const [newIdeas, setNewIdeas] = useState([])
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -64,6 +67,7 @@ export function IdeasList(props){
             //   console.log(response, status)
             if (status === 200){
                 //   const finalIdeasInit = [...response].concat(ideasInit)
+                // alert(response)
                 setIdeas(response)
                 setIdeasDidSet(true)
             } else {
@@ -73,14 +77,14 @@ export function IdeasList(props){
             loadIdeas(myCallback)
         }
       }, [ideas, ideasDidSet, setIdeasDidSet])
-
+    //   console.log("ideas is" + ideas)
       return ideas.map((item, index)=>{
         return <Idea idea={item} className='my-5 py-5 border' key={`${index}-{item.id}`}/>
     })
 }
 
 export function ActionButton(props){
-    const {action} = props
+    const {idea, action} = props
     // const [justClicked, setJustClicked] = useState(1)
     const className = props.className ? props.className : 'btn btn-primary btn-sm'
     const actionDisplay = action.display ? action.display : 'Action'

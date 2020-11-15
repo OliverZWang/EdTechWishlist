@@ -106,7 +106,11 @@ function handleIdeaCreateFormDidSubmit(event){
             
         }
         else if(xhr.status === 401){
-            alert("You must login ")
+            alert("401 You must login ")
+            window.location.href = "/login"
+        }
+        else if(xhr.status === 403){
+            alert("403 You must login ")
             window.location.href = "/login"
         }
         else if(xhr.status === 500){

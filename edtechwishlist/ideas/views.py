@@ -3,8 +3,10 @@ from django.http import HttpResponse, Http404, JsonResponse
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .models import Idea
 from .forms import IdeaForm
 from .serializers import IdeaSerializer
@@ -35,6 +37,8 @@ def idea_list_view(request, *args, **kwargs):
 # http method the client == post
 # No longer rendering a form. Just accepting post data
 @api_view(['POST'])
+# @authentication_classes([SessionAuthentication])
+@permission_classes([IsAuthenticated])
 def idea_create_view(request, *args, **kwargs):
     # data = request.POST or None
     serializer = IdeaSerializer(data=request.POST)
@@ -115,19 +119,33 @@ def idea_detail_view(request, idea_id, *args, **kwargs):
 
 #     return JsonResponse(data, status=status)
 
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
 def idea_delete_view(request, idea_id, *args, **kwargs):
-
     qs = Idea.objects.filter(id=idea_id)
-
     if not qs.exists():
-        return JsonResponse({"message": "The idea you're trying to delete is not found"}, status=404)
-
+        return Response({}, status=404)
     qs = qs.filter(user=request.user)
-
     if not qs.exists():
-        return JsonResponse({"message": "You cannot delete someone else's idea!"}, status=401)
-
+        return Response({"message": "You cannot delete this idea."}, status=401)
     obj = qs.first()
     obj.delete()
 
-    return JsonResponse({"message": "The idea has been deleted."}, status=200)
+    return Response({"message": "Idea removed"}, status=200)
+
+# def idea_delete_view(request, idea_id, *args, **kwargs):
+
+#     qs = Idea.objects.filter(id=idea_id)
+
+#     if not qs.exists():
+#         return JsonResponse({"message": "The idea you're trying to delete is not found"}, status=404)
+
+#     qs = qs.filter(user=request.user)
+
+#     if not qs.exists():
+#         return JsonResponse({"message": "You cannot delete someone else's idea!"}, status=401)
+
+#     obj = qs.first()
+#     obj.delete()
+
+#     return JsonResponse({"message": "The idea has been deleted."}, status=200)

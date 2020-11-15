@@ -8,7 +8,7 @@ class Idea(models.Model):
     user = models.ForeignKey(User,  on_delete=models.CASCADE)
     content = models.TextField(blank=True, null=True)
     image = models.FileField(upload_to='image/', blank=True, null=True)
-
+    timestamp = models.DateTimeField(auto_now_add=True)
     # def __str__(self):
     #     return self.content
 
@@ -17,11 +17,11 @@ class Idea(models.Model):
 
 
 
-    def serialize(self):
-        return{
-            "id": self.id,
-            "content": self.content,
-            "user": self.user.username,
-            # "wanted": 1
+    # def serialize(self):
+    #     return{
+    #         "id": self.id,
+    #         "content": self.content,
+    #         "user": self.user.username,
+    #         # "wanted": 1
 
-        }
+    #     }
