@@ -137,7 +137,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "static-root")
+STATIC_ROOT = os.path.join(BASE_DIR, "static-root")
 
 # Any website has access to my api
 CORS_ORIGIN_ALLOW_ALL = True 

@@ -6,23 +6,33 @@ import {createIdea, loadIdeas} from '../lookup'
 export function IdeasComponent(props){
 
     const textAreaRef = React.createRef()
-
+    const [newIdea, setNewIdea] = useState([])
     // newIdeas is the actual variable to use for the state
     // 
     const [newIdeas, setNewIdeas] = useState([])
     const handleSubmit = (event) => {
         event.preventDefault()
         const newValue = textAreaRef.current.value
-        console.log(newValue)
-        createIdea(newValue, (response, status)=>{
-            if(status === 201){
-                console.log("New Idea Created")
-            }
-            else{
-                console.log(response)
-                console.log("An error has occurred")
-            }
+        
+        // copy the array newIdeas
+        let tempNewIdeas = [... newIdeas]
+
+        // put the new idea at the beginning of the array
+        tempNewIdeas.unshift({
+            content: newValue,
+            id: 12345
         })
+        setNewIdeas(tempNewIdeas)
+        textAreaRef.current.value = ''
+        // createIdea(newValue, (response, status)=>{
+        //     if(status === 201){
+        //         console.log("New Idea Created")
+        //     }
+        //     else{
+        //         console.log(response)
+        //         console.log("An error has occurred")
+        //     }
+        // })
         // let tempNewIdeas = [...newIdeas]
         //unshift put the new idea on top
         //TO DO: Change this to a server side call
@@ -30,7 +40,7 @@ export function IdeasComponent(props){
         //     content: newValue, 
         //     id: 123
         // })
-        setNewIdeas(newValue)
+        // setNewIdeas(newValue)
         textAreaRef.current.value = ''
     }
 
@@ -48,35 +58,41 @@ export function IdeasComponent(props){
 }
 
 export function IdeasList(props){
+    // console.log(props.newIdeas)
+    const [ideasInit, setIdeasInit] = useState([])
 
-    // const [ideasInit, setIdeasInit] = useState([])
+
     const [ideas, setIdeas] = useState([])
     const [ideasDidSet, setIdeasDidSet] = useState(false)
     // setIdeasInit([...props.newIdeas].concat(ideasInit))
-    // console.log(props.newIdeas)
-    // useEffect(()=>{
-    //     const final = [...props.newIdeas].concat(ideasInit)
-    //     if (final.length !== ideas.length){
-    //         setIdeas(final)
-    //     }
+
+    useEffect(()=>{
+        console.log("This is called")
+        // console.log("what is ideaInit? " + ideasInit)
+        const final = [...props.newIdeas].concat(ideasInit)
+        if (final.length !== ideas.length){
+            setIdeas(final)
+        }
         
-    // }, [props.newIdeas, ideas, ideasInit])
+    }, [props.newIdeas, ideas, ideasInit])
+    
     useEffect(() => {
         if (ideasDidSet === false){
+
             const myCallback = (response, status) => {
-            //   console.log(response, status)
-            if (status === 200){
-                //   const finalIdeasInit = [...response].concat(ideasInit)
-                // alert(response)
-                setIdeas(response)
-                setIdeasDidSet(true)
-            } else {
-                alert("There was an error")
-            }
+                //   console.log(response, status)
+                if (status === 200){
+                    // const finalIdeasInit = [...response].concat(ideasInit)
+                    // alert(response)
+                    setIdeasInit(response)
+                    setIdeasDidSet(true)
+                } else {
+                    alert("There was an error")
+                }
             }
             loadIdeas(myCallback)
         }
-      }, [ideas, ideasDidSet, setIdeasDidSet])
+      }, [ideasInit, ideasDidSet, setIdeasDidSet])
     //   console.log("ideas is" + ideas)
       return ideas.map((item, index)=>{
         return <Idea idea={item} className='my-5 py-5 border' key={`${index}-{item.id}`}/>
