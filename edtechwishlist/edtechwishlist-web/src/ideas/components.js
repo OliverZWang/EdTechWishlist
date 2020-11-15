@@ -10,40 +10,31 @@ export function IdeasComponent(props){
     // newIdeas is the actual variable to use for the state
     // 
     const [newIdeas, setNewIdeas] = useState([])
+
+    const handleBackendUpdate = (response, status)=>{
+
+        //backend api response handler
+
+        let tempNewIdeas = [... newIdeas]
+        // console.log(response, status)
+        if(status === 201){
+            tempNewIdeas.unshift(response)
+            setNewIdeas(tempNewIdeas)
+        }
+        else{
+            console.log(response)
+            alert("An error occured. Please try again. ")
+        }
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault()
         const newValue = textAreaRef.current.value
+        //backend api request
+        createIdea(newValue, handleBackendUpdate)
         
-        // copy the array newIdeas
-        let tempNewIdeas = [... newIdeas]
-
-        // put the new idea at the beginning of the array
-        tempNewIdeas.unshift({
-            content: newValue,
-            id: 12345
-        })
-        setNewIdeas(tempNewIdeas)
-        textAreaRef.current.value = ''
-        // createIdea(newValue, (response, status)=>{
-        //     if(status === 201){
-        //         console.log("New Idea Created")
-        //     }
-        //     else{
-        //         console.log(response)
-        //         console.log("An error has occurred")
-        //     }
-        // })
-        // let tempNewIdeas = [...newIdeas]
-        //unshift put the new idea on top
-        //TO DO: Change this to a server side call
-        // tempNewIdeas.unshift({
-        //     content: newValue, 
-        //     id: 123
-        // })
-        // setNewIdeas(newValue)
         textAreaRef.current.value = ''
     }
-
     return <div className={props.className}>
         <div className='col-12 mb-3'>
             <form onSubmit={handleSubmit}>
@@ -63,11 +54,13 @@ export function IdeasList(props){
 
 
     const [ideas, setIdeas] = useState([])
+
+    //to prevent load from being called infinitely
     const [ideasDidSet, setIdeasDidSet] = useState(false)
     // setIdeasInit([...props.newIdeas].concat(ideasInit))
 
     useEffect(()=>{
-        console.log("This is called")
+        // console.log("This is called")
         // console.log("what is ideaInit? " + ideasInit)
         const final = [...props.newIdeas].concat(ideasInit)
         if (final.length !== ideas.length){

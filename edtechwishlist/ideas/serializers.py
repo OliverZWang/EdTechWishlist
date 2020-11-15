@@ -5,7 +5,7 @@ from .models import Idea
 MAX_LENGTH = settings.MAX_LENGTH
 
 class IdeaSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
+    # id = serializers.IntegerField()
 
     class Meta:
         model = Idea

@@ -41,7 +41,8 @@ def idea_list_view(request, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def idea_create_view(request, *args, **kwargs):
     # data = request.POST or None
-    serializer = IdeaSerializer(data=request.POST)
+    # print("Request post:", request.data)
+    serializer = IdeaSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status = 201)
