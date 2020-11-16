@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 // useEffect: run HTTP request, do a lookup on server
 
-import {createIdea, loadIdeas} from '../lookup'
+import {apiIdeaCreate, apiIdeaList} from './lookup'
 
 export function IdeasComponent(props){
 
@@ -31,7 +31,7 @@ export function IdeasComponent(props){
         event.preventDefault()
         const newValue = textAreaRef.current.value
         //backend api request
-        createIdea(newValue, handleBackendUpdate)
+        apiIdeaCreate(newValue, handleBackendUpdate)
         
         textAreaRef.current.value = ''
     }
@@ -72,7 +72,7 @@ export function IdeasList(props){
     useEffect(() => {
         if (ideasDidSet === false){
 
-            const myCallback = (response, status) => {
+            const handleIdeaListLookup = (response, status) => {
                 //   console.log(response, status)
                 if (status === 200){
                     // const finalIdeasInit = [...response].concat(ideasInit)
@@ -83,7 +83,7 @@ export function IdeasList(props){
                     alert("There was an error")
                 }
             }
-            loadIdeas(myCallback)
+            apiIdeaList(handleIdeaListLookup)
         }
       }, [ideasInit, ideasDidSet, setIdeasDidSet])
     //   console.log("ideas is" + ideas)

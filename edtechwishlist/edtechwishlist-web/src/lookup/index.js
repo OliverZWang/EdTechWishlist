@@ -1,6 +1,5 @@
-import {loadIdeas, createIdea} from './components'
+import {backendLookup} from './components'
 
 export {
-    loadIdeas,
-    createIdea
+    backendLookup
 }

@@ -16,7 +16,7 @@ function getCookie(name) {
 }
 
 
-function lookup(method, endpoint, callback, data){
+export function backendLookup(method, endpoint, callback, data){
     let jsonData ;
     if(data){
         jsonData = JSON.stringify(data)
@@ -54,13 +54,3 @@ function lookup(method, endpoint, callback, data){
     xhr.send(jsonData)
 }
 
-export function createIdea(newIdea, callback){
-    lookup("POST", "/ideas/create/", callback, {content: newIdea})
-}
-
-
-export function loadIdeas(callback){
-    lookup("GET", "/ideas/list/", callback)
-
-
-}
