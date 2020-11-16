@@ -37,13 +37,8 @@ export function backendLookup(method, endpoint, callback, data){
     
     xhr.onload = function(){
         // console.log("Response is"+xhr.response['response'])
-        if(endpoint === "/ideas/list/"){
-            callback(xhr.response, xhr.status)
-        }
-        else if(endpoint === "/ideas/create/"){
-            callback(xhr.response, xhr.status)
-        }
         
+        callback(xhr.response, xhr.status)
 
     }
     xhr.onerror = function(e){

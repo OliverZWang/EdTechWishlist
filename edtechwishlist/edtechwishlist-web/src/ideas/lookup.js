@@ -6,6 +6,15 @@ export function apiIdeaCreate(newIdea, callback){
 }
 
 
-export function apiIdeaList(callback){
-    backendLookup("GET", "/ideas/list/", callback)
+export function apiIdeaList(username, callback){
+    let endpoint = "/ideas/list/"
+    if(username){
+        endpoint = `/ideas/list/?username=${username}`
+    }
+    backendLookup("GET", endpoint, callback)
+}
+
+export function apiIdeaDetail(ideaId, callback){
+
+    backendLookup("GET", `/ideas/${ideaId}`, callback)
 }

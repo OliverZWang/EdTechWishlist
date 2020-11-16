@@ -19,6 +19,9 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 @api_view(['GET'])
 def idea_list_view(request, *args, **kwargs):
     qs = Idea.objects.all()
+    username = request.GET.get('username')
+    if username != None:
+        qs = qs.filter(user__username__iexact=username)
     serializer = IdeaSerializer(qs, many=True)
     return Response(serializer.data, status=200)
 

@@ -8,6 +8,7 @@ import {IdeasComponent} from './ideas'
 
 const appElement = document.getElementById("root")
 if(appElement){
+    // console.log("appElement dataset", appElement.dataset)
     ReactDOM.render(
         <React.StrictMode>
           <App />
@@ -16,12 +17,12 @@ if(appElement){
       );
 }
 
+const e = React.createElement
 const ideasElement = document.getElementById("edtech-wishlist")
 if(ideasElement){  
+
     ReactDOM.render(
-        <React.StrictMode>
-          <IdeasComponent />
-        </React.StrictMode>,
+        e(IdeasComponent, ideasElement.dataset),
         ideasElement
       );
 }

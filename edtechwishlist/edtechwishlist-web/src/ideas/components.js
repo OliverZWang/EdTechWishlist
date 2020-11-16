@@ -5,6 +5,8 @@ import {apiIdeaCreate, apiIdeaList} from './lookup'
 
 export function IdeasComponent(props){
 
+    const canPost = props.canPost === "false" ? false : true
+    console.log("props:", props)
     const textAreaRef = React.createRef()
     const [newIdea, setNewIdea] = useState([])
     // newIdeas is the actual variable to use for the state
@@ -15,7 +17,7 @@ export function IdeasComponent(props){
 
         //backend api response handler
 
-        let tempNewIdeas = [... newIdeas]
+        let tempNewIdeas = [...newIdeas]
         // console.log(response, status)
         if(status === 201){
             tempNewIdeas.unshift(response)
@@ -36,15 +38,15 @@ export function IdeasComponent(props){
         textAreaRef.current.value = ''
     }
     return <div className={props.className}>
-        <div className='col-12 mb-3'>
+        {canPost === true && <div className='col-12 mb-3'>
             <form onSubmit={handleSubmit}>
                 <textarea ref={textAreaRef} required={true} className='form-control' name='idea'>
 
                 </textarea>
                 <button type='submit' className='btn btn-primary my-3'>Post Idea</button>
             </form>
-        </div>
-        <IdeasList newIdeas={newIdeas}/>
+        </div>}
+        <IdeasList newIdeas={newIdeas} {...props}/>
     </div> 
 }
 
@@ -83,9 +85,9 @@ export function IdeasList(props){
                     alert("There was an error")
                 }
             }
-            apiIdeaList(handleIdeaListLookup)
+            apiIdeaList(props.username, handleIdeaListLookup)
         }
-      }, [ideasInit, ideasDidSet, setIdeasDidSet])
+      }, [ideasInit, ideasDidSet, props.username, setIdeasDidSet])
     //   console.log("ideas is" + ideas)
       return ideas.map((item, index)=>{
         return <Idea idea={item} className='my-5 py-5 border' key={`${index}-{item.id}`}/>
