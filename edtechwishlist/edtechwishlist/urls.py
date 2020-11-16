@@ -18,13 +18,20 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-
+from ideas.views import (
+    local_ideas_list_view,
+    local_ideas_detail_view,
+    local_ideas_profile_view
+)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('ideas/', include('ideas.urls')),
+    path('', local_ideas_list_view),
+    path('<int:idea_id>', local_ideas_detail_view),
+    path('profile/<str:username>', local_ideas_profile_view),
     path('react/', TemplateView.as_view(template_name='react_via_dj.html'))
 ]
 

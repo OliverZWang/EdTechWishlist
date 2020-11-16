@@ -33,7 +33,7 @@ export function Idea(props){
             <br/>
             <ActionButton idea={idea} action={{type: "comment", display: "Comment"}} />
             <br/>
-            {isDetail ? null : <button className='btn btn-outline-primary' onClick={handleLink}>View</button>}
+            {isDetail ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View</button>}
         </div>
     </div>
 }

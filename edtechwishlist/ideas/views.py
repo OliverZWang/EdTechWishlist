@@ -15,6 +15,20 @@ from .serializers import IdeaSerializer
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
+def local_ideas_list_view(request, *args, **kwargs):
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+    # return HttpResponse("<h1>Hello World</h1>")
+    return render(request, "ideas/list.html")
+
+def local_ideas_detail_view(request, idea_id, *args, **kwargs):
+
+    return render(request, "ideas/detail.html", context={"idea_id": idea_id})
+
+def local_ideas_profile_view(request, username, *args, **kwargs):
+
+    return render(request, "ideas/profile.html", context={"profile_username": username}, status=200)
 
 @api_view(['GET'])
 def idea_list_view(request, *args, **kwargs):
@@ -91,8 +105,11 @@ def idea_create_view(request, *args, **kwargs):
     # return render(request, 'ideas/form.html', context={"form": form})
 
 def home_view(request, *args, **kwargs):
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
     # return HttpResponse("<h1>Hello World</h1>")
-    return render(request, "ideas/home.html", context={}, status=200)
+    return render(request, "ideas/home.html", context={"username": username}, status=200)
 
 @api_view(['GET'])
 def idea_detail_view(request, idea_id, *args, **kwargs):
