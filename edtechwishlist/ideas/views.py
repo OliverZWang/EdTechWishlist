@@ -16,16 +16,14 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 def home_view(request, *args, **kwargs):
     username = None
+    
     if request.user.is_authenticated:
         username = request.user.username
-    # return HttpResponse("<h1>Hello World</h1>")
+
     return render(request, "ideas/home.html", context={"username": username}, status=200)
 
 def ideas_list_view(request, *args, **kwargs):
-    username = None
-    if request.user.is_authenticated:
-        username = request.user.username
-    # return HttpResponse("<h1>Hello World</h1>")
+    print("user is:", request.user)
     return render(request, "ideas/list.html")
 
 def ideas_detail_view(request, idea_id, *args, **kwargs):

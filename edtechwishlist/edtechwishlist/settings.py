@@ -146,9 +146,10 @@ DEFAULT_RENDERER_CLASSES = [
     'rest_framework.renderers.JSONRenderer',
 ]
 
-DEFAULT_AUTHENTICATION_CLASSES = [
-    'rest_framework.authentication.SessionAuthentication',
-]
+# DEFAULT_AUTHENTICATION_CLASSES = [
+#     'rest_framework.authentication.BasicAuthentication',
+#     'rest_framework.authentication.SessionAuthentication',
+# ]
 
 
 if DEBUG:
@@ -160,6 +161,6 @@ if DEBUG:
     # ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': DEFAULT_AUTHENTICATION_CLASSES,
+    # 'DEFAULT_AUTHENTICATION_CLASSES': DEFAULT_AUTHENTICATION_CLASSES,
     'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
 }

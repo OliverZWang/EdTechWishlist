@@ -3,6 +3,8 @@ import {IdeasList} from './list'
 import {IdeaCreate} from './create'
 import {Idea} from './detail'
 import {apiIdeaDetail} from './lookup'
+import {LoginButton, LogoutButton, UserProfile} from '../auth0'
+
 
 
 export function IdeasComponent(props){
@@ -18,6 +20,9 @@ export function IdeasComponent(props){
     }
 
     return <div className={props.className}>
+        <LoginButton/>
+        <LogoutButton/>
+        <UserProfile/>
         {canPost === true && <IdeaCreate didPost={handleNewIdea} className='col-12 mb-3'/>}
         <IdeasList newIdeas={newIdeas} {...props}/>
     </div> 

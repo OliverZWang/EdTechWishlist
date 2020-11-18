@@ -19,6 +19,7 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 @api_view(['GET'])
 def idea_list_view(request, *args, **kwargs):
+    print(request.user)
     qs = Idea.objects.all()
     username = request.GET.get('username')
     if username != None:
@@ -34,6 +35,7 @@ def idea_list_view(request, *args, **kwargs):
 # @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
 def idea_create_view(request, *args, **kwargs):
+    print(request.user)
     # data = request.POST or None
     # print("Request post:", request.data)
     serializer = IdeaSerializer(data=request.data)

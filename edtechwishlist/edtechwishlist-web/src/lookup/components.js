@@ -24,6 +24,7 @@ export function backendLookup(method, endpoint, callback, data){
     const xhr = new XMLHttpRequest()
     // const method = 'GET'
     const url = `http://localhost:8000${endpoint}`
+    console.log("url", url)
     xhr.responseType = 'json'
     xhr.open(method, url)
     const csrftoken = getCookie('csrftoken');
@@ -37,12 +38,17 @@ export function backendLookup(method, endpoint, callback, data){
     
     xhr.onload = function(){
         // console.log("Response is"+xhr.response['response'])
-        
+        if(xhr.status === 403 && xhr.response){
+            const detail = xhr.response.detail
+            if (detail === "Authentication credentials were not provided."){
+                // window.location.href = "/login?showLoginRequired=true"
+            }
+        }
         callback(xhr.response, xhr.status)
 
     }
     xhr.onerror = function(e){
-        console.log(e)
+        console.log("error:", e)
         callback({"message": "The request was an error"}, 400)
     }
 

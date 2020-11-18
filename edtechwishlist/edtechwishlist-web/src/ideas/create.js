@@ -6,7 +6,7 @@ import {apiIdeaCreate} from './lookup'
 export function IdeaCreate(props){
 
     const textAreaRef = React.createRef()
-    const didPost = props
+    const {didPost} = props
 
     const handleBackendUpdate = (response, status)=>{
 
