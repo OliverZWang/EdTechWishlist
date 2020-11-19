@@ -29,7 +29,3 @@ def ideas_list_view(request, *args, **kwargs):
 def ideas_detail_view(request, idea_id, *args, **kwargs):
 
     return render(request, "ideas/detail.html", context={"idea_id": idea_id})
-
-def ideas_profile_view(request, username, *args, **kwargs):
-
-    return render(request, "ideas/profile.html", context={"profile_username": username}, status=200)

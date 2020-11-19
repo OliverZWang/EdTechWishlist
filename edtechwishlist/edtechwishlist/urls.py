@@ -16,18 +16,19 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, re_path, include
 from django.views.generic import TemplateView
 from ideas.views import (
     ideas_list_view,
     ideas_detail_view,
-    ideas_profile_view
+
 )
 from accounts.views import (
     login_view,
     logout_view,
     register_view
 )
+
 
 
 urlpatterns = [
@@ -39,7 +40,7 @@ urlpatterns = [
     path('ideas/', include('ideas.api.urls')),
     path('', ideas_list_view),
     path('<int:idea_id>', ideas_detail_view),
-    path('profile/<str:username>', ideas_profile_view),
+    re_path(r'profiles?/', include('profiles.urls')),
     path('react/', TemplateView.as_view(template_name='react_via_dj.html'))
 ]
 
