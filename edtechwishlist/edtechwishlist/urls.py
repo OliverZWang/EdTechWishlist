@@ -23,11 +23,19 @@ from ideas.views import (
     ideas_detail_view,
     ideas_profile_view
 )
+from accounts.views import (
+    login_view,
+    logout_view,
+    register_view
+)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
+    path('login/', login_view),
+    path('logout/', logout_view),
+    path('register/', register_view),
     path('ideas/', include('ideas.api.urls')),
     path('', ideas_list_view),
     path('<int:idea_id>', ideas_detail_view),
