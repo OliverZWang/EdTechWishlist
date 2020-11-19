@@ -23,7 +23,7 @@ def home_view(request, *args, **kwargs):
     return render(request, "ideas/home.html", context={"username": username}, status=200)
 
 def ideas_list_view(request, *args, **kwargs):
-    print("user is:", request.user)
+    # print("user is:", request.user)
     return render(request, "ideas/list.html")
 
 def ideas_detail_view(request, idea_id, *args, **kwargs):

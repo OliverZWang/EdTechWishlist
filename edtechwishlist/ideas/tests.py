@@ -29,12 +29,17 @@ class TweetTestCase(TestCase):
         client = APIClient()
         client.login(username=self.user.username, password='somepassword')
         return client
+
     def test_idea_list(self):
         client = self.get_client()
         response = client.get('/ideas/list/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()['response']), 3) 
+        self.assertEqual(len(response.json()), 3) 
         # print(response.json())
+    
+    def test_ideas_related_name(self):
+        user = self.user
+        self.assertEqual(user.ideas.count(), 2)
     
     def test_idea_create_api_view(self):
         request_data = {"content": "This is my test idea"}

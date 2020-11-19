@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 from ..models import Idea
 from ..forms import IdeaForm
 from ..serializers import IdeaSerializer
@@ -19,12 +20,17 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 @api_view(['GET'])
 def idea_list_view(request, *args, **kwargs):
-    print(request.user)
+    # paginator = PageNumberPagination()
+    # paginator.page_size = 20
+    
+    # print(request.user)
     qs = Idea.objects.all()
     username = request.GET.get('username')
     if username != None:
         qs = qs.filter(user__username__iexact=username)
+    # paginated_qs = paginator.paginate_queryset(qs, request)
     serializer = IdeaSerializer(qs, many=True)
+    # return paginator.get_paginated_response(serializer.data)
     return Response(serializer.data, status=200)
 
 
@@ -35,7 +41,7 @@ def idea_list_view(request, *args, **kwargs):
 # @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
 def idea_create_view(request, *args, **kwargs):
-    print(request.user)
+    # print(request.user)
     # data = request.POST or None
     # print("Request post:", request.data)
     serializer = IdeaSerializer(data=request.data)
