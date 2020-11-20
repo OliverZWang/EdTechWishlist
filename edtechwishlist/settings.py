@@ -25,7 +25,7 @@ MAX_LENGTH = 1500
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://edtech-wishlist']
 LOGIN_URL = '/login'
 
 # Application definition
