@@ -1,8 +1,9 @@
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 edtechwishlist/edtechwishlist-web/package-lock.json
-edtechwishlist/static
-edtechwishlist/static-root
+# edtechwishlist/static
+# edtechwishlist/static-root
+edtechwishlist/edtechwishlist-web/
 edtechwishlist/edtechwishlist-web/node_modules
 .DS_STORE
 node_modules
