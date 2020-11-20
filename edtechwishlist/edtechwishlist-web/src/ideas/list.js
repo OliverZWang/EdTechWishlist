@@ -32,8 +32,7 @@ export function IdeasList(props){
             const handleIdeaListLookup = (response, status) => {
                 //   console.log(response, status)
                 if (status === 200){
-                    // const finalIdeasInit = [...response].concat(ideasInit)
-                    // alert(response)
+                    // console.log(JSON.stringify(response))
                     setIdeasInit(response)
                     setIdeasDidSet(true)
                 } else {

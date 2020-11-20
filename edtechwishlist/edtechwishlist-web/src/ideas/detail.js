@@ -1,6 +1,6 @@
 
 import React from 'react'
-
+import {UserDisplay, UserPicture} from '../profiles'
 import {ActionButton} from './buttons'
 
 export function Idea(props){
@@ -27,13 +27,21 @@ export function Idea(props){
 
     
     return <div className={className}>
-        <p>{idea.id} - {idea.content} - {idea.user}</p>
-        <div>
-            <ActionButton idea={idea} action={{type: "delete", display: "Delete"}} />
-            <br/>
-            <ActionButton idea={idea} action={{type: "comment", display: "Comment"}} />
-            <br/>
-            {isDetail ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View</button>}
+        <div className='d-flex'>
+            <div className=''>
+                <UserPicture user={idea.user}/>
+            </div>
+            <div className='col-11'>
+                <UserDisplay user={idea.user} includeFullName={true}/>
+                <p>{idea.content}</p>
+                <div className='btn btn-group px-0'>
+                    <ActionButton idea={idea} action={{type: "delete", display: "Delete"}} />
+
+                    <ActionButton idea={idea} action={{type: "comment", display: "Comment"}} />
+
+                    {isDetail ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View</button>}
+                </div>
+            </div>
         </div>
     </div>
 }
