@@ -7,6 +7,7 @@ User = settings.AUTH_USER_MODEL
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
+    profession = models.CharField(max_length=100, blank=True, null=True)
 
 def user_did_save(sender, instance, created, *args, **kwargs):
     if created:

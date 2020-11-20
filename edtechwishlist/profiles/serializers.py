@@ -5,6 +5,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField(read_only=True)
     last_name = serializers.SerializerMethodField(read_only=True)
     username = serializers.SerializerMethodField(read_only=True)
+    email = serializers.SerializerMethodField(read_only=True)
     # id = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Profile
@@ -12,7 +13,9 @@ class ProfileSerializer(serializers.ModelSerializer):
             "first_name", 
             "last_name",
             "username", 
+            "email",
             "id",
+            "profession",
             "bio"
         ]
     
@@ -25,3 +28,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def get_username(self, obj):
         return obj.user.username
+    
+    def get_email(self, obj):
+        return obj.user.email

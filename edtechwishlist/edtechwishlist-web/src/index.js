@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {IdeasComponent, IdeaDetailComponent} from './ideas'
 import { Auth0Provider } from "@auth0/auth0-react";
+import {ProfileBadgeComponent} from './profiles'
 
 
 const appElement = document.getElementById("root")
@@ -39,6 +40,15 @@ const ideaDetailElement = document.querySelectorAll(".edtech-wishlist-detail")
 ideaDetailElement.forEach(container => {
     ReactDOM.render(
         e(IdeaDetailComponent, container.dataset),
+        container
+      );
+})
+
+const userProfileBadgeElement = document.querySelectorAll(".edtech-wishlist-profile-badge")
+
+userProfileBadgeElement.forEach(container => {
+    ReactDOM.render(
+        e(ProfileBadgeComponent, container.dataset),
         container
       );
 })

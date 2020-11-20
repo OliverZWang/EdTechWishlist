@@ -41,6 +41,7 @@ urlpatterns = [
     path('', ideas_list_view),
     path('<int:idea_id>', ideas_detail_view),
     re_path(r'profiles?/', include('profiles.urls')),
+    re_path(r'profiles?/api/', include('profiles.api.urls')),
     path('react/', TemplateView.as_view(template_name='react_via_dj.html'))
 ]
 
