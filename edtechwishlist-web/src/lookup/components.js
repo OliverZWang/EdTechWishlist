@@ -23,7 +23,8 @@ export function backendLookup(method, endpoint, callback, data){
     }
     const xhr = new XMLHttpRequest()
     // const method = 'GET'
-    const url = `https://edtech-wishlist.herokuapp.com${endpoint}`
+    // const url = `https://edtech-wishlist.herokuapp.com${endpoint}`
+    const url = `http://localhost:8000${endpoint}`
     console.log("url", url)
     xhr.responseType = 'json'
     xhr.open(method, url)

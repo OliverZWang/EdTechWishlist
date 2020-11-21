@@ -33,6 +33,7 @@ export function Idea(props){
             </div>
             <div className='col-11'>
                 <UserDisplay user={idea.user} includeFullName={true}/>
+                <p>{idea.title}</p>
                 <p>{idea.content}</p>
                 <div className='btn btn-group px-0'>
                     <ActionButton idea={idea} action={{type: "delete", display: "Delete"}} />
