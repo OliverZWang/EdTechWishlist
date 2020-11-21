@@ -1,5 +1,6 @@
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+secret_key.txt
 edtechwishlist-web/package-lock.json
 # edtechwishlist/static
 # edtechwishlist/static-root
