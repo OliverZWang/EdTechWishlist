@@ -69,6 +69,15 @@ CORS_ALLOWED_ORIGINS = [
     # "https://edtech-wishlist.herokuapp.com/",
 ]
 
+CORS_ALLOW_HEADERS = (
+        'x-requested-with',
+        'content-type',
+        'accept',
+        'origin',
+        'authorization',
+        'x-csrftoken'
+)
+
 ROOT_URLCONF = 'edtechwishlist.urls'
 
 TEMPLATES = [

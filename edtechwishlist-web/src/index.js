@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {IdeasComponent, IdeaDetailComponent} from './ideas'
-import { Auth0Provider } from "@auth0/auth0-react";
 import {ProfileBadgeComponent} from './profiles'
 
 
@@ -24,13 +23,8 @@ const ideasElement = document.getElementById("edtech-wishlist")
 if(ideasElement){  
 
     ReactDOM.render(
-      <Auth0Provider
-        domain="dev-weu8jlop.us.auth0.com"
-        clientId="qESDemWRTmqPh0k7YTRs567P6gXuwNsC"
-        redirectUri={window.location.origin}
-      >   
-        {e(IdeasComponent, ideasElement.dataset)}
-      </Auth0Provider>,
+   
+        e(IdeasComponent, ideasElement.dataset),
         ideasElement
       );
 }
