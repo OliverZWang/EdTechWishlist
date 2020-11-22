@@ -6,7 +6,7 @@ User = settings.AUTH_USER_MODEL
 # Create your models here.
 class Idea(models.Model):
     user = models.ForeignKey(User,  on_delete=models.CASCADE, related_name='ideas')
-    # title = models.CharField(max_length=150)
+    title = models.CharField(max_length=100)
     content = models.TextField(blank=True, null=True)
     image = models.FileField(upload_to='image/', blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
