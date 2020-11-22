@@ -6,6 +6,7 @@ import {apiIdeaCreate} from './lookup'
 export function IdeaCreate(props){
 
     const textAreaRef = React.createRef()
+    // const inputTextRef = React.createRef()
     const {didPost} = props
 
     const handleBackendUpdate = (response, status)=>{
@@ -21,14 +22,17 @@ export function IdeaCreate(props){
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        const newValue = textAreaRef.current.value
+        // const newTitle = inputTextRef.current.value
+        const newContent = textAreaRef.current.value
         //backend api request
-        apiIdeaCreate(newValue, handleBackendUpdate)
+        apiIdeaCreate(newContent, handleBackendUpdate)
         
         textAreaRef.current.value = ''
+        // inputTextRef.current.value = ''
     }
     return <div className={props.className}>
             <form onSubmit={handleSubmit}>
+                {/* <input ref={inputTextRef} required={true} className='form-control' type="text" name="title" /> */}
                 <textarea ref={textAreaRef} required={true} className='form-control' name='idea'>
 
                 </textarea>

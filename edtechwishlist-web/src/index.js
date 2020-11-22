@@ -19,7 +19,7 @@ if(appElement){
 }
 
 const e = React.createElement
-const ideasElement = document.getElementById("edtech-wishlist")
+const ideasElement = document.getElementById("idea-list")
 if(ideasElement){  
 
     ReactDOM.render(

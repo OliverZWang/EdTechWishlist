@@ -25,7 +25,7 @@ export function backendLookup(method, endpoint, callback, data){
     // const method = 'GET'
     // const url = `https://edtech-wishlist.herokuapp.com${endpoint}`
     const url = `http://localhost:8000${endpoint}`
-    console.log("url", url)
+    console.log("current request", url)
     xhr.responseType = 'json'
     xhr.open(method, url)
     const csrftoken = getCookie('csrftoken');

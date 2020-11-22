@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'ideas',
     'accounts',
     'profiles',
+    'application',
 
     'rest_framework',
     'corsheaders'

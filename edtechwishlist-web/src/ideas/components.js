@@ -21,7 +21,7 @@ export function IdeasComponent(props){
 
     return <div className={props.className}>
 
-        {canPost === true && <IdeaCreate didPost={handleNewIdea} className='col-12 mb-3'/>}
+        {/* {canPost === true && <IdeaCreate didPost={handleNewIdea} className='col-12 mb-3'/>} */}
         <IdeasList newIdeas={newIdeas} {...props}/>
     </div> 
 }

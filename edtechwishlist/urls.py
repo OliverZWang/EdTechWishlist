@@ -28,21 +28,23 @@ from accounts.views import (
     logout_view,
     register_view
 )
+from application.views import (application_about_view)
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('about/', application_about_view, name='application-about'),
     path('users/', include('users.urls')),
     path('login/', login_view),
     path('logout/', logout_view),
     path('register/', register_view),
     path('ideas/', include('ideas.api.urls')),
-    path('', ideas_list_view),
+    path('', include('application.urls'), name='application'),
     path('<int:idea_id>', ideas_detail_view),
     re_path(r'profiles?/', include('profiles.urls')),
     re_path(r'profiles?/api/', include('profiles.api.urls')),
-    path('react/', TemplateView.as_view(template_name='react_via_dj.html'))
+    # path('react/', TemplateView.as_view(template_name='react_via_dj.html'))
 ]
 
 if settings.DEBUG: 
