@@ -16,7 +16,8 @@ class Idea(models.Model):
     class Meta:
         ordering = ['-id']
 
-
+    def __str__(self):
+        return self.title
 
     # def serialize(self):
     #     return{

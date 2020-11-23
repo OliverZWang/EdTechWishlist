@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { isValidElement } from 'react'
 import {UserDisplay, UserPicture} from '../profiles'
 import {ActionButton} from './buttons'
 
@@ -28,13 +28,20 @@ export function Idea(props){
     
     return <div className={className}>
         <div className='d-flex'>
-            <div className=''>
+            {/* <div className=''>
                 <UserPicture user={idea.user}/>
-            </div>
+            </div> */}
             <div className='col-11'>
-                <UserDisplay user={idea.user} includeFullName={true}/>
-                <p>{idea.title}</p>
-                <p>{idea.content}</p>
+                <article className='media content-section'>
+                    <div className='media-body'>
+                        <div className='article-metadata'>
+                            <UserDisplay className='mr-2' user={idea.user} includeFullName={true}/>
+                        </div>
+                        <h2><a class="article-title" href='#'>{idea.title}</a></h2>
+                        <p className="article-content">{idea.content}</p>
+                    </div>
+                    
+                </article>
                 <div className='btn btn-group px-0'>
                     <ActionButton idea={idea} action={{type: "delete", display: "Delete"}} />
 
@@ -42,6 +49,7 @@ export function Idea(props){
 
                     {isDetail ? null : <button className='btn btn-outline-primary btn-sm' onClick={handleLink}>View</button>}
                 </div>
+                
             </div>
         </div>
     </div>

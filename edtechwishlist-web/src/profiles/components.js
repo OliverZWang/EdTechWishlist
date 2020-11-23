@@ -15,14 +15,14 @@ export function UserLink(props){
 }
 
 export function UserDisplay(props){
-    const {user, includeFullName, hideLink} = props
+    const {user, includeFullName, hideLink, className} = props
     const nameDisplay = includeFullName ? `${user.first_name} ${user.last_name} ` : null
 
 
-    return <React.Fragment>
+    return <div className={className}>
         {nameDisplay}
         {hideLink ? `@${user.username}` : <UserLink username={user.username}>@{user.username}</UserLink>}
-    </React.Fragment>
+    </div>
 }
 
 export function UserPicture(props){
