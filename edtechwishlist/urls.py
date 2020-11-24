@@ -46,7 +46,9 @@ urlpatterns = [
     path('logout/', logout_view, name="logout"),
     path('register/', register_view, name="register"),
     path('profile/', current_profile_view, name="profile-current"),
-    path('users/', include('users.urls')),
+
+
+
     
 
 

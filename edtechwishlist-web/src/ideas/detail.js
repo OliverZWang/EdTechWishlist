@@ -33,11 +33,10 @@ export function Idea(props){
     
     return <div className={className}>
         <div className='d-flex'>
-            {/* <div className=''>
-                <UserPicture user={idea.user}/>
-            </div> */}
+
             <div className='col-12'>
                 <article className='media content-section'>
+                    <UserPicture user={idea.user}/>
                     <div className='media-body'>
                         <div className='article-metadata'>
                             <UserDisplay className='mr-2' user={idea.user} includeFullName={true}/>

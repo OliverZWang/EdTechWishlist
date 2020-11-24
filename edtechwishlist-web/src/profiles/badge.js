@@ -12,6 +12,7 @@ function ProfileBadge(props){
 return user ? <div>
         <UserPicture user={user} hideLink/>
         <p><UserDisplay user={user} includeFullName hideLink/></p>
+
         <p>Profession: {user.profession}</p>
         <p>Bio: {user.bio}</p>
         <button onClick={handleEmail} className='btn btn-primary'>Email</button>

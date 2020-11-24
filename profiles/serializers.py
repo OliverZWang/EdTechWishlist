@@ -15,8 +15,9 @@ class ProfileSerializer(serializers.ModelSerializer):
             "username", 
             "email",
             "id",
+            'image',
             "profession",
-            "bio"
+            "bio",
         ]
     
     def get_first_name(self, obj):

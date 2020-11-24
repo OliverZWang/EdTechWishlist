@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for idea in ideas %}
+        <article class='media content-section'>
+            <img class='rounded-circle article-image' src='{{idea.user.profile.image.url}}'/>
+            <div class='media-body'>
+                <div class='article-metadata'>
+                    <a class='mr-2' href=#>{{ idea.user}}</a>
+                    <small class='text-muted'>{{ idea.timestamp|date:"F d, Y" }}</small>
+                </div>
+                <h2><a class='article-title' href='#'>{{ idea.title }}</a></h2>
+                <p class='article-content'> {{ idea.content }}</p>
+            </div>
+        </article>
+    {% endfor %}
+
+    {% comment %} <h1>Home</h1> {% endcomment %}
+    {% comment %} <div id='idea-list'></div> {% endcomment %}
+{% endblock content %}
