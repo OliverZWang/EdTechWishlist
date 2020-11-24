@@ -18,35 +18,51 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.generic import TemplateView
+
 from ideas.views import (
     ideas_list_view,
     ideas_detail_view,
 
 )
-from accounts.views import (
+from application.views import (
+    application_about_view, 
+    application_home_view
+)
+
+from profiles.views import (
+    current_profile_view,
     login_view,
     logout_view,
     register_view
 )
-from application.views import (application_about_view)
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('about/', application_about_view, name='application-about'),
-    path('users/', include('users.urls')),
+    path('', application_home_view, name='home'),
+    path('about/', application_about_view, name='about'),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('register/', register_view, name="register"),
+    path('profile/', current_profile_view, name="profile-current"),
+    path('users/', include('users.urls')),
+    
+
+
     path('ideas/', include('ideas.api.urls')),
-    path('', include('application.urls')),
+    # path('media/profile_pics/profile_image.png'),
+
     path('<int:idea_id>', ideas_detail_view),
-    re_path(r'profiles?/', include('profiles.urls')),
+    # re_path(r'profiles?/', include('profiles.urls')),
     re_path(r'profiles?/api/', include('profiles.api.urls')),
     # path('react/', TemplateView.as_view(template_name='react_via_dj.html'))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 
 if settings.DEBUG: 
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
     
