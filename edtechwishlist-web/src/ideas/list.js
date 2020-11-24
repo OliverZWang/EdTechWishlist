@@ -44,6 +44,6 @@ export function IdeasList(props){
       }, [ideasInit, ideasDidSet, props.username, setIdeasDidSet])
     //   console.log("ideas is" + ideas)
       return ideas.map((item, index)=>{
-        return <Idea idea={item} className='my-5 py-5 border' key={`${index}-{item.id}`}/>
+        return <Idea idea={item} className='my-5' key={`${index}-{item.id}`}/>
     })
 }

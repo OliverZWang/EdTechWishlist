@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {IdeasList} from './list'
-import {IdeaCreate} from './create'
+// import {IdeaCreate} from './create'
 import {Idea} from './detail'
 import {apiIdeaDetail} from './lookup'
 
@@ -9,15 +9,15 @@ import {apiIdeaDetail} from './lookup'
 
 export function IdeasComponent(props){
 
-    const canPost = props.canPost === "false" ? false : true
+    // const canPost = props.canPost === "false" ? false : true
     console.log("props:", props)
     const [newIdeas, setNewIdeas] = useState([])
 
-    const handleNewIdea = (newIdea)=>{
-        let tempNewIdeas = [...newIdeas]
-        tempNewIdeas.unshift(newIdea)
-        setNewIdeas(tempNewIdeas)
-    }
+    // const handleNewIdea = (newIdea)=>{
+    //     let tempNewIdeas = [...newIdeas]
+    //     tempNewIdeas.unshift(newIdea)
+    //     setNewIdeas(tempNewIdeas)
+    // }
 
     return <div className={props.className}>
 

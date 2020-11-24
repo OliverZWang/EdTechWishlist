@@ -2,10 +2,15 @@
 import React, { isValidElement } from 'react'
 import {UserDisplay, UserPicture} from '../profiles'
 import {ActionButton} from './buttons'
+import Moment from 'moment'
 
 export function Idea(props){
     const {idea} = props
-    const className = props.className ? props.className : 'col-10 mx-auto col-md-6'
+    const className = props.className ? props.className : 'col-12 mx-auto'
+    // console.log(Data())
+    const timestamp = Moment(idea.timestamp).format('LLL')
+
+
 
 
     var path = window.location.pathname
@@ -31,13 +36,14 @@ export function Idea(props){
             {/* <div className=''>
                 <UserPicture user={idea.user}/>
             </div> */}
-            <div className='col-11'>
+            <div className='col-12'>
                 <article className='media content-section'>
                     <div className='media-body'>
                         <div className='article-metadata'>
                             <UserDisplay className='mr-2' user={idea.user} includeFullName={true}/>
+                            <small className='text-muted'>{timestamp}</small>
                         </div>
-                        <h2><a class="article-title" href='#'>{idea.title}</a></h2>
+                        <h2><a className="article-title" href='#'>{idea.title}</a></h2>
                         <p className="article-content">{idea.content}</p>
                     </div>
                     

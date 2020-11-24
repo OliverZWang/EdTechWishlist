@@ -5,7 +5,7 @@ import React from 'react'
 
 
 export function ActionButton(props){
-    const {idea, action} = props
+    const {action} = props
     // const [justClicked, setJustClicked] = useState(1)
     const className = props.className ? props.className : 'btn btn-primary btn-sm'
     const actionDisplay = action.display ? action.display : 'Action'

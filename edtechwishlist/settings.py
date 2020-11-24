@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'application',
 
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -186,3 +187,5 @@ REST_FRAMEWORK = {
 }
 
 django_heroku.settings(locals())
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
