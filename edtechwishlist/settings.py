@@ -33,6 +33,7 @@ DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'edtech-wishlist.herokuapp.com']
 LOGIN_URL = '/login'
 
+
 # Application definition
 
 INSTALLED_APPS = [
