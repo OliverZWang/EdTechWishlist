@@ -65,13 +65,17 @@ class IdeaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class IdeaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Idea
-    success_url = '/profile/'
+    success_url = "/"
     def test_func(self):
         idea = self.get_object()
         if self.request.user == idea.user:
             return True
         else:
             return False
+
+def get_latest_idea(request):
+    latest_idea = Idea.objects.order_by('-timestamp').first()
+    return render(request, "ideas/idea_detail.html", {"object": latest_idea})
 
 def home_view(request, *args, **kwargs):
     username = None

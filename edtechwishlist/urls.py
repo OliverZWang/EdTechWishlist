@@ -20,8 +20,7 @@ from django.urls import path, re_path, include
 from django.views.generic import TemplateView
 
 from ideas.views import (
-    ideas_list_view,
-    ideas_detail_view,
+    get_latest_idea,
     IdeaListView,
     IdeaDetailView,
     IdeaCreateView,
@@ -63,6 +62,7 @@ urlpatterns = [
     path('', IdeaListView.as_view(), name='home'),
     path('idea/<int:pk>/update', IdeaUpdateView.as_view(), name="idea-update"),
     path('idea/<int:pk>/delete', IdeaDeleteView.as_view(), name="idea-delete"),
+    path('idea/latest', get_latest_idea, name='idea-latest'),
 
 
     
