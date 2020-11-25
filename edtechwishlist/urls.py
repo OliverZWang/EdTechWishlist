@@ -22,11 +22,18 @@ from django.views.generic import TemplateView
 from ideas.views import (
     ideas_list_view,
     ideas_detail_view,
+    IdeaListView,
+    IdeaDetailView,
+    IdeaCreateView,
+    IdeaUpdateView,
+    IdeaDeleteView,
+    ProfileIdeaListView
 
 )
 from application.views import (
     application_about_view, 
-    application_home_view
+    application_home_view,
+    
 )
 
 from profiles.views import (
@@ -40,13 +47,22 @@ from profiles.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', application_home_view, name='home'),
+
+    # path('', application_home_view, name='home'),
     path('about/', application_about_view, name='about'),
+
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('register/', register_view, name="register"),
-    path('profile/', current_profile_view, name="profile-current"),
 
+    path('profile/', current_profile_view, name="profile-current"),
+    path('profile/<str:username>', ProfileIdeaListView.as_view(), name='profile-idea-list'),
+
+    path('idea/<int:pk>/', IdeaDetailView.as_view(), name="idea-detail"),
+    path('idea/create/', IdeaCreateView.as_view(), name="idea-create"),
+    path('', IdeaListView.as_view(), name='home'),
+    path('idea/<int:pk>/update', IdeaUpdateView.as_view(), name="idea-update"),
+    path('idea/<int:pk>/delete', IdeaDeleteView.as_view(), name="idea-delete"),
 
 
     
@@ -55,7 +71,7 @@ urlpatterns = [
     path('ideas/', include('ideas.api.urls')),
     # path('media/profile_pics/profile_image.png'),
 
-    path('<int:idea_id>', ideas_detail_view),
+    
     # re_path(r'profiles?/', include('profiles.urls')),
     re_path(r'profiles?/api/', include('profiles.api.urls')),
     # path('react/', TemplateView.as_view(template_name='react_via_dj.html'))

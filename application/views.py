@@ -12,3 +12,4 @@ def application_home_view(request):
         'ideas': IdeaModel.objects.all()
     }
     return render(request, 'application/home.html', context)
+

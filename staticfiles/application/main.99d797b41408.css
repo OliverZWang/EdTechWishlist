@@ -47,6 +47,8 @@ a.article-title:hover {
 
 .article-content {
   white-space: pre-line;
+  border: 1px solid #ddd;
+  min-height: 200px;
   padding: 5px;
 }
 

@@ -45,20 +45,18 @@ a.article-title:hover {
   text-decoration: none;
 }
 
+.article-heading {
+  border-bottom: 1px solid;
+}
+
 .article-content {
   white-space: pre-line;
-  padding: 5px;
 }
 
 .article-img {
   height: 65px;
   width: 65px;
   margin-right: 16px;
-}
-
-.article-demo-img {
-  max-width: 800px;
-  max-height: 600px;
 }
 
 .article-metadata {

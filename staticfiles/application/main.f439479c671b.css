@@ -1,4 +1,4 @@
-body {
+/* body {
   background: #fafafa;
   color: #333333;
   margin-top: 5rem;
@@ -47,6 +47,8 @@ a.article-title:hover {
 
 .article-content {
   white-space: pre-line;
+  border: 1px solid #ddd;
+  min-height: 200px;
   padding: 5px;
 }
 
@@ -87,4 +89,4 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
-}
+} */

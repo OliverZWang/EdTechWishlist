@@ -10,7 +10,7 @@ class IdeaSerializer(serializers.ModelSerializer):
     user = ProfileSerializer(read_only=True, source='user.profile')
     class Meta:
         model = Idea
-        fields = ['user','title', 'id' , 'content', 'timestamp']
+        fields = ['user','title', 'id' , 'problem', 'current_solution', 'ideal_solution', 'timestamp']
 
     def validate_content(self, value):
         if len(value) > MAX_LENGTH:
