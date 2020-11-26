@@ -12,9 +12,11 @@
                     
                 </div>
                 <h2 class='article-title'>{{ object.title }}</h2>
-                <h3>The Problem</h3>
-                <p class='article-content'> {{ object.problem }}</p>
 
+                {% if object.problem %}
+                    <h3>The Problem</h3>
+                    <p class='article-content'> {{ object.problem }}</p>
+                {% endif %}
                 {% if object.current_solution %}
                     <h3>What have you used, and how has it worked so far?</h3>
                     <p class='article-content'> {{ object.current_solution }}</p>
