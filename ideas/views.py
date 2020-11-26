@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import is_safe_url
+from django.urls import reverse_lazy
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
@@ -38,19 +39,19 @@ class ProfileIdeaListView(ListView):
 class IdeaDetailView(DetailView):
     model = Idea
     # template_name = 'ideas/detail.html'
-    fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'image']
+    fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'demo_picture']
 
 class IdeaCreateView(LoginRequiredMixin, CreateView):
     model = Idea
-    fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'image']
-
+    # fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'demo_picture']
+    form_class = IdeaForm
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
 class IdeaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Idea
-    fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'image']
+    fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'demo_picture']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -65,13 +66,17 @@ class IdeaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class IdeaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Idea
-    success_url = "/"
+    # success_url = "/profile/" + user.username + "/"
     def test_func(self):
         idea = self.get_object()
         if self.request.user == idea.user:
             return True
         else:
             return False
+    def get_success_url(self):
+        # user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return reverse_lazy('profile-idea-list', kwargs={'username': self.request.user.username})
+
 
 def get_latest_idea(request):
     latest_idea = Idea.objects.order_by('-timestamp').first()

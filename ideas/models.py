@@ -11,7 +11,7 @@ class Idea(models.Model):
     problem = models.TextField(blank=True, null=True)
     current_solution = models.TextField(blank=True, null=True)
     ideal_solution = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='article_img', blank=True, null=True)
+    demo_picture = models.ImageField(default='default_article.jpg', upload_to='article_img')
     timestamp = models.DateTimeField(auto_now_add=True)
 
 

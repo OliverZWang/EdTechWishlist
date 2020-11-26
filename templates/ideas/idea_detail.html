@@ -25,12 +25,12 @@
                     <p class='article-content'> {{ object.ideal_solution }}</p>
                 {% endif %}
                 
-                {% if object.image %}
+                {% comment %} {% if object.demo_picture %}
                     <h3>Demo</h3>
-                    <image class='article-demo-img' src='{{object.image.url}}'/>
-                {% else %}
-                    <image class='article-demo-img' src='/media/default_article.jpg'/>
-                {% endif %}
+                {% endif %} {% endcomment %}
+
+                <image class='article-demo-img' src='{{object.demo_picture.url}}'/>
+                
                 
                 {% if object.user == user %}
                         <div>

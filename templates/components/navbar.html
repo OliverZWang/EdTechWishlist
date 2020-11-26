@@ -20,6 +20,9 @@
           <a class="nav-link" href="{% url 'idea-create' %}">New Idea</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile-idea-list' request.user.username %}">My Ideas</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'profile-current' %}">Profile</a>
         </li>
         <li class="nav-item">
