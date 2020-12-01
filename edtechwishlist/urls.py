@@ -26,7 +26,10 @@ from ideas.views import (
     IdeaCreateView,
     IdeaUpdateView,
     IdeaDeleteView,
-    ProfileIdeaListView
+    ProfileIdeaListView,
+    CommentCreateView, 
+    CommentUpdateView,
+    CommentDeleteView
 
 )
 from application.views import (
@@ -60,13 +63,13 @@ urlpatterns = [
     path('idea/<int:pk>/', IdeaDetailView.as_view(), name="idea-detail"),
     path('idea/create/', IdeaCreateView.as_view(), name="idea-create"),
     path('', IdeaListView.as_view(), name='home'),
-    path('idea/<int:pk>/update', IdeaUpdateView.as_view(), name="idea-update"),
-    path('idea/<int:pk>/delete', IdeaDeleteView.as_view(), name="idea-delete"),
-    path('idea/latest', get_latest_idea, name='idea-latest'),
+    path('idea/<int:pk>/update/', IdeaUpdateView.as_view(), name="idea-update"),
+    path('idea/<int:pk>/delete/', IdeaDeleteView.as_view(), name="idea-delete"),
+    path('idea/latest/', get_latest_idea, name='idea-latest'),
 
-
-    
-
+    path('comment/create/<int:pk>/', CommentCreateView.as_view(), name="comment-create"),
+    path('comment/update/<int:pk>/', CommentUpdateView.as_view(), name="comment-update"),
+    path('comment/delete/<int:pk>/', CommentDeleteView.as_view(), name="comment-delete"),
 
     path('ideas/', include('ideas.api.urls')),
     # path('media/profile_pics/profile_image.png'),

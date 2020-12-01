@@ -9,8 +9,8 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .models import Idea
-from .forms import IdeaForm
+from .models import Idea, Comment
+from .forms import IdeaForm, CommentForm
 from .serializers import IdeaSerializer
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 # Create your views here.
@@ -76,6 +76,56 @@ class IdeaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def get_success_url(self):
         # user = get_object_or_404(User, username=self.kwargs.get('username'))
         return reverse_lazy('profile-idea-list', kwargs={'username': self.request.user.username})
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    # fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'demo_picture']
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.idea = Idea.objects.filter(id = self.kwargs['pk']).first()
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        # user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return reverse_lazy('idea-detail', kwargs={'pk': self.kwargs['pk']})
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    # fields = ['content']
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        # form.instance.idea = Comment.objects.filter(id = self.kwargs['pk']).first().idea
+        form.instance.idea = self.get_object().idea
+        return super().form_valid(form)
+
+    def test_func(self):
+        comment = self.get_object()
+        if self.request.user == comment.user:
+            return True
+        else:
+            return False
+
+    def get_success_url(self):
+        
+        # user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return reverse_lazy('idea-detail', kwargs={'pk': self.get_object().idea.id})
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+
+    def test_func(self):
+        comment = self.get_object()
+        if self.request.user == comment.user:
+            return True
+        else:
+            return False
+
+    def get_success_url(self):
+        return reverse_lazy('idea-detail', kwargs={'pk': self.get_object().idea.id})
 
 
 def get_latest_idea(request):

@@ -4,9 +4,11 @@ from django.urls import reverse
 from PIL import Image
 User = settings.AUTH_USER_MODEL
 
+
+
 # Create your models here.
 class Idea(models.Model):
-    user = models.ForeignKey(User,  on_delete=models.CASCADE, related_name='ideas')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ideas')
     title = models.CharField(max_length=100)
     problem = models.TextField(blank=True, null=True)
     current_solution = models.TextField(blank=True, null=True)
@@ -33,11 +35,14 @@ class Idea(models.Model):
     #             img.thumbnail(output_size)
     #             img.save(self.image.path)
 
-    # def serialize(self):
-    #     return{
-    #         "id": self.id,
-    #         "content": self.content,
-    #         "user": self.user.username,
-    #         # "wanted": 1
+class Comment(models.Model):
+    idea = models.ForeignKey(Idea, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField(blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-    #     }
+    class Meta:
+        ordering = ['-timestamp']
+    
+    def __str__(self):
+        return self.content

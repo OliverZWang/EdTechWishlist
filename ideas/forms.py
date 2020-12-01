@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput, Textarea
 from django.conf import settings
-from .models import Idea
+from .models import Idea, Comment
 
 MAX_LENGTH = settings.MAX_LENGTH
 
@@ -26,3 +26,8 @@ class IdeaForm(forms.ModelForm):
     #     if len(content) > MAX_LENGTH:
     #         raise forms.ValidationError("The content is too long")
     #     return content
+
+class CommentForm(forms.ModelForm):
+    class Meta: 
+        model = Comment
+        fields = ['content']

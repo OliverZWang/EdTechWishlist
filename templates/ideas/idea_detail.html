@@ -26,24 +26,48 @@
                     <h3>What would be an ideal solution to this problem?</h3>
                     <p class='article-content'> {{ object.ideal_solution }}</p>
                 {% endif %}
-                
+
                 {% comment %} {% if object.demo_picture %}
                     <h3>Demo</h3>
                 {% endif %} {% endcomment %}
 
                 <image class='article-demo-img' src='{{object.demo_picture.url}}'/>
                 
+                <div>
+                    <a class='btn btn-secondary btn-sm mt-2 mb-1' href='{% url 'comment-create' object.id %}'>Comment</a>
+                    {% if object.user == user %}
+                        <a class='btn btn-secondary btn-sm mt-2 mb-1' href='{% url 'idea-update' object.id %}'>Update</a>
+                        <a class='btn btn-danger btn-sm mt-2 mb-1' href='{% url 'idea-delete' object.id %}'>Delete</a>
+                    {% endif %}
+
+                </div>
                 
-                {% if object.user == user %}
-                        <div>
-                            <a class='btn btn-secondary btn-sm mt-2 mb-1' href='{% url 'idea-update' object.id %}'>Update</a>
-                            <a class='btn btn-danger btn-sm mt-2 mb-1' href='{% url 'idea-delete' object.id %}'>Delete</a>
-                        </div>
-                {% endif %}
             </div>
         </article>
 
 
+        {% for comment in object.comments.all %}
+        <article class='media content-section'>
+            <img class='rounded-circle article-img' src='{{comment.user.profile.image.url}}'/>
+            <div class='media-body'>
+                <div class='article-metadata'>
+                    <a class='mr-2' href="{% url 'profile-idea-list' comment.user.username %}">{{ comment.user}}</a>
+                    <small class='text-muted'>{{ comment.timestamp|date:"F d, Y" }}</small>
+                    
+                </div>
+                <h3>Comment</h3>
+                <p class='article-content'> {{ comment.content }}</p>
+
+
+                {% if comment.user == user %}
+                        <div>
+                            <a class='btn btn-secondary btn-sm mt-2 mb-1' href='{% url 'comment-update' comment.id %}'>Update</a>
+                            <a class='btn btn-danger btn-sm mt-2 mb-1' href='{% url 'comment-delete' comment.id %}'>Delete</a>
+                        </div>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
 
     {% comment %} <div class='edtech-wishlist-detail' data-idea-id='{{ idea_id }}' data-class-name='col-12 mx-auto'></div> {% endcomment %}
 {% endblock content %}
