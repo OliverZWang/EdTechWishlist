@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>About EdTech Wishlist</h1>
+        <article class='media content-section'>
+            {% comment %} <img class='rounded-circle account-img' src='{{profile.image.url}}'/> {% endcomment %}
+            <div class='media-body'>
+                <div class='article-metadata'>
+                    <h2 class='account-heading'>About EdTech Wishlist</h2>
+                    {% comment %} <p class="text-secondary"><a href='mailto:{{profile.user.email}}'>{{ profile.user.email }}</a><p> {% endcomment %}
+                {% comment %} </div>
+                <h3 class='article-title'>Title</h2>
+                <p class='article-content'>this is a title</p>
+
+
+                <h3 class='article-title'>Problem</h2>
+                <p class='article-content'>This is a problem</p>
+
+
+
+                <h3 class='article-title'>Solution</h2>
+                <p class='article-content'>this is a solution</p> {% endcomment %}
+
+            </div>
+    </article>
 {% endblock content %}

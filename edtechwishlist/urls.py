@@ -35,6 +35,7 @@ from ideas.views import (
 from application.views import (
     application_about_view, 
     application_home_view,
+    application_example_view
     
 )
 
@@ -50,9 +51,9 @@ from profiles.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # path('', application_home_view, name='home'),
-    path('about/', application_about_view, name='about'),
 
+    path('about/', application_about_view, name='about'),
+    path('example/', application_example_view, name='example'),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('register/', register_view, name="register"),

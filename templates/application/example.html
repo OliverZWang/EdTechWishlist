@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <article class='media content-section'>
+            {% comment %} <img class='rounded-circle account-img' src='{{profile.image.url}}'/> {% endcomment %}
+            <div class='media-body'>
+                <div class='article-metadata'>
+                    <h2 class='account-heading'>Idea Example</h2>
+                    {% comment %} <p class="text-secondary"><a href='mailto:{{profile.user.email}}'>{{ profile.user.email }}</a><p> {% endcomment %}
+                </div>
+                <h3 class='article-title'>Title</h2>
+                <p class='article-content'>The title of the idea. </p>
+                <p class='article-content text-secondary'>e.g. "Cut Up Sentence Simulator"</p>
+
+
+                <h3 class='article-title'>Problem</h2>
+                <p class='article-content'>The problem you are facing or need help solving. </p>
+                <p class='article-content text-secondary'>e.g. Teaching reading to non-readers (1s​t​ grade) in an online environment is incredibly difficult. One strategy that we use in a face to face classroom is called a “cut up sentence” in which the teacher writes a series of words on a piece of paper. The teacher then literally cuts this paper up into individual words and mixes them up for a student. The student can then say the words as they recognize them and put them in order to form a sentence.</p>
+
+
+                <h3 class='article-title'>Current Solution</h2>
+                <p class='article-content'>What solutions, if any, are you using to address the problem. How well does it work? In what ways is it not ideal?</p>
+                <p class='article-content text-secondary'>e.g. Zoom “remote control” to drag around images in PowerPoint (difficult for students to use, especially since most of them are using iPads). </p>
+
+
+                <h3 class='article-title'>Ideal Solution</h2>
+                <p class='article-content'>What would be an ideal solution for the problem?</p>
+                <p class='article-content text-secondary'>e.g. A tool where I could type a sentence using a font that is kid-friendly. I could then cut up the sentence myself by dragging between words. The words would fall to the bottom and could be dragged around by me or the student.</p>
+
+
+            </div>
+    </article>
+{% endblock content %}

@@ -13,3 +13,5 @@ def application_home_view(request):
     }
     return render(request, 'application/home.html', context)
 
+def application_example_view(request):
+    return render(request, 'application/example.html')
