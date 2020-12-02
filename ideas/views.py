@@ -10,6 +10,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import Idea, Comment
+from profiles.models import Profile
 from .forms import IdeaForm, CommentForm
 from .serializers import IdeaSerializer
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -35,6 +36,12 @@ class ProfileIdeaListView(ListView):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Idea.objects.filter(user=user).order_by('-timestamp')
     
+    def get_context_data(self, **kwargs):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        profile = get_object_or_404(Profile, user=user)
+        context = super().get_context_data(**kwargs)
+        context['profile'] = profile
+        return context
 
 class IdeaDetailView(DetailView):
     model = Idea

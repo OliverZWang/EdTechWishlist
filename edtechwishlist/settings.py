@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'crispy_forms',
     'storages',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -207,3 +208,11 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        # 'toolbar': 'basic',
+        'height': 300,
+        'width': '100%',
+    },
+}

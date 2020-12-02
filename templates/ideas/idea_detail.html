@@ -15,16 +15,17 @@
 
                 {% if object.problem %}
                     <h3>The Problem</h3>
-                    <p class='article-content'> {{ object.problem }}</p>
+                    <p class='article-content'> {{ object.problem | safe }}</p>
                 {% endif %}
+                
                 {% if object.current_solution %}
                     <h3>What have you used, and how has it worked so far?</h3>
-                    <p class='article-content'> {{ object.current_solution }}</p>
+                    <p class='article-content'> {{ object.current_solution | safe }}</p>
                 {% endif %}
                 
                 {% if object.ideal_solution %}
                     <h3>What would be an ideal solution to this problem?</h3>
-                    <p class='article-content'> {{ object.ideal_solution }}</p>
+                    <p class='article-content'> {{ object.ideal_solution | safe }}</p>
                 {% endif %}
 
                 {% comment %} {% if object.demo_picture %}
@@ -56,7 +57,7 @@
                     
                 </div>
                 <h3>Comment</h3>
-                <p class='article-content'> {{ comment.content }}</p>
+                <p class='article-content'> {{ comment.content | safe }}</p>
 
 
                 {% if comment.user == user %}
@@ -68,6 +69,6 @@
             </div>
         </article>
         {% endfor %}
-
+        
     {% comment %} <div class='edtech-wishlist-detail' data-idea-id='{{ idea_id }}' data-class-name='col-12 mx-auto'></div> {% endcomment %}
 {% endblock content %}

@@ -2,6 +2,8 @@ from django import forms
 from django.forms import TextInput, Textarea
 from django.conf import settings
 from .models import Idea, Comment
+from ckeditor.widgets import CKEditorWidget
+from ckeditor.fields import RichTextField
 
 MAX_LENGTH = settings.MAX_LENGTH
 
@@ -11,15 +13,16 @@ CURRENT_SOLUTION_PLACEHOLDER = '''What solutions, if any, are you using to addre
 IDEAL_SOLUTION = '''What would be an ideal solution for the problem?\ne.g. A tool where I could type a sentence using a font that is kid-friendly. I could then cut up the sentence myself by dragging between words. The words would fall to the bottom and could be dragged around by me or the student. '''
 
 class IdeaForm(forms.ModelForm):
+    # problem = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = Idea
         fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'demo_picture']
-        widgets = {
-            'title': TextInput(attrs={'placeholder': TITLE_PLACEHOLDER}),
-            'problem': Textarea(attrs={'placeholder': PROBLEM_PLACEHOLDER}),
-            'current_solution': Textarea(attrs={'placeholder': CURRENT_SOLUTION_PLACEHOLDER}),
-            'ideal_solution': Textarea(attrs={'placeholder': IDEAL_SOLUTION}),
-        }
+        # widgets = {
+        #     'title': TextInput(attrs={'placeholder': TITLE_PLACEHOLDER}),
+        #     'problem': RichTextField(attrs={'placeholder': PROBLEM_PLACEHOLDER}),
+        #     'current_solution': Textarea(attrs={'placeholder': CURRENT_SOLUTION_PLACEHOLDER}),
+        #     'ideal_solution': Textarea(attrs={'placeholder': IDEAL_SOLUTION}),
+        # }
         # title.widget.attrs.update({'placeholder': '123456'})
     # def clean_content(self):
     #     content = self.cleaned_data.get("content")

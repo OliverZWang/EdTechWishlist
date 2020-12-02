@@ -9,6 +9,12 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 
+from django.views.generic import DetailView
+
+class ProfileDetailView(DetailView):
+    model = Profile
+    fields = ['username', 'email', 'first_name', 'last_name', 'profession', 'bio']
+
 def login_view(request, *args, **kwargs):
     form = AuthenticationForm(request, data=request.POST or None)
 
