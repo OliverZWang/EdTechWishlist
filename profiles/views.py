@@ -11,6 +11,8 @@ from django.contrib import messages
 
 from django.views.generic import DetailView
 
+
+
 class ProfileDetailView(DetailView):
     model = Profile
     fields = ['username', 'email', 'first_name', 'last_name', 'profession', 'bio']

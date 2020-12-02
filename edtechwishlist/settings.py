@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'storages',
     'ckeditor',
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -216,3 +217,23 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
     },
 }
+
+#SMTP Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+
+# SOCIAL_AUTH_TRAILING_SLASH = False 
+# SOCIAL_AUTH_AUTH0_DOMAIN = os.environ.get('SOCIAL_AUTH_AUTH0_DOMAIN')
+# SOCIAL_AUTH_AUTH0_KEY = os.environ.get('SOCIAL_AUTH_AUTH0_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+# SOCIAL_AUTH_AUTH0_SCOPE = [
+#     'openid',
+#     'profile',
+#     'email'
+# ]
