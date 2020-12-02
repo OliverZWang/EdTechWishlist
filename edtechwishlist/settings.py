@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'storages',
     'ckeditor',
-    'social_django'
+
 ]
 
 MIDDLEWARE = [
@@ -173,28 +173,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ORIGIN_WHITELIST = ( 'https://edtech-wishlist.herokuapp.com', )
 
 
-DEFAULT_RENDERER_CLASSES = [
-    'rest_framework.renderers.JSONRenderer',
-]
-
-# DEFAULT_AUTHENTICATION_CLASSES = [
-#     'rest_framework.authentication.BasicAuthentication',
-#     'rest_framework.authentication.SessionAuthentication',
-# ]
-
-
-if DEBUG:
-    DEFAULT_RENDERER_CLASSES += [
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
-    # DEFAULT_AUTHENTICATION_CLASSES += [
-    #     'edtechwishlist.rest_api.dev.DevAuthentication'
-    # ]
-
-REST_FRAMEWORK = {
-    # 'DEFAULT_AUTHENTICATION_CLASSES': DEFAULT_AUTHENTICATION_CLASSES,
-    'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
-}
 
 django_heroku.settings(locals())
 

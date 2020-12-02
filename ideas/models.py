@@ -28,14 +28,6 @@ class Idea(models.Model):
     def get_absolute_url(self):
         return reverse("idea-detail", kwargs={"pk": self.pk})
     
-    # def save(self):
-    #     super().save(*args, **kwargs)
-    #     if self.image:
-    #         img = Image.open(self.image.path)
-    #         if img.height > 600 or img.width > 800:
-    #             output_size = (600, 800)
-    #             img.thumbnail(output_size)
-    #             img.save(self.image.path)
 
 class Comment(models.Model):
     idea = models.ForeignKey(Idea, on_delete=models.CASCADE, related_name='comments')

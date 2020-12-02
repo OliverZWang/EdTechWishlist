@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+# from django.http import Http404
 from .models import Profile
 from .forms import ProfileUpdateForm, UserRegisterForm, UserUpdateForm
-from django.conf import settings
+# from django.conf import settings
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -49,7 +49,6 @@ def register_view(request, *args, **kwargs):
         user.set_password(form.cleaned_data.get("password1"))
 
         # send confirmation email to verify their account
-        # login(request, user)
         username = form.cleaned_data.get('username')
         messages.success(request, f'Account Created for {username}!')
         return redirect('/login/')

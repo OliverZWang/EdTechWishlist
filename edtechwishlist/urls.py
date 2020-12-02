@@ -17,10 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import path, re_path, include
-from django.views.generic import TemplateView
-
-
+from django.urls import path
 
 from ideas.views import (
     get_latest_idea,
@@ -54,32 +51,17 @@ from profiles.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-
     path('about/', application_about_view, name='about'),
     path('example/', application_example_view, name='example'),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('register/', register_view, name="register"),
 
-    path('password-reset/', auth_views.PasswordResetView.as_view(
-             template_name='accounts/password_reset.html'
-         ),
-         name='password_reset'),
-    path('password-reset/done/',
-         auth_views.PasswordResetDoneView.as_view(
-             template_name='accounts/password_reset_done.html'
-         ),
-         name='password_reset_done'),
-    path('password-reset-confirm/<uidb64>/<token>/',
-         auth_views.PasswordResetConfirmView.as_view(
-             template_name='accounts/password_reset_confirm.html'
-         ),
-         name='password_reset_confirm'),
-    path('password-reset-complete/',
-         auth_views.PasswordResetCompleteView.as_view(
-             template_name='accounts/password_reset_complete.html'
-         ),
-         name='password_reset_complete'),
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='accounts/password_reset.html'),name='password_reset'),
+
+    path('password-reset/done/',auth_views.PasswordResetDoneView.as_view(template_name='accounts/password_reset_done.html'),name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html'),name='password_reset_confirm'),
+    path('password-reset-complete/',auth_views.PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'),name='password_reset_complete'),
 
     path('profile/', current_profile_view, name="profile-current"),
     path('profile/<str:username>', ProfileIdeaListView.as_view(), name='profile-idea-list'),
@@ -95,16 +77,7 @@ urlpatterns = [
     path('comment/update/<int:pk>/', CommentUpdateView.as_view(), name="comment-update"),
     path('comment/delete/<int:pk>/', CommentDeleteView.as_view(), name="comment-delete"),
 
-    path('ideas/', include('ideas.api.urls')),
-    # path('media/profile_pics/profile_image.png'),
-
-    
-    # re_path(r'profiles?/', include('profiles.urls')),
-    re_path(r'profiles?/api/', include('profiles.api.urls')),
-    # path('react/', TemplateView.as_view(template_name='react_via_dj.html'))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
+]
 
 if settings.DEBUG: 
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

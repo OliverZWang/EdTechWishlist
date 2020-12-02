@@ -1,26 +1,19 @@
-from django.http import HttpResponse, Http404, JsonResponse
+
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.http import is_safe_url
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from .models import Idea, Comment
 from profiles.models import Profile
 from .forms import IdeaForm, CommentForm
-from .serializers import IdeaSerializer
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-# Create your views here.
+
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 class IdeaListView(ListView):
     model = Idea
-    # template_name = 'application/home.html'
     context_object_name = 'ideas'
     ordering = ['-timestamp']
     paginate_by = 6
@@ -45,12 +38,10 @@ class ProfileIdeaListView(ListView):
 
 class IdeaDetailView(DetailView):
     model = Idea
-    # template_name = 'ideas/detail.html'
     fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'demo_picture']
 
 class IdeaCreateView(LoginRequiredMixin, CreateView):
     model = Idea
-    # fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'demo_picture']
     form_class = IdeaForm
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -73,7 +64,6 @@ class IdeaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class IdeaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Idea
-    # success_url = "/profile/" + user.username + "/"
     def test_func(self):
         idea = self.get_object()
         if self.request.user == idea.user:
@@ -81,12 +71,11 @@ class IdeaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         else:
             return False
     def get_success_url(self):
-        # user = get_object_or_404(User, username=self.kwargs.get('username'))
+
         return reverse_lazy('profile-idea-list', kwargs={'username': self.request.user.username})
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
-    # fields = ['title', 'problem', 'current_solution', 'ideal_solution', 'demo_picture']
     form_class = CommentForm
 
     def form_valid(self, form):
@@ -100,12 +89,11 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
-    # fields = ['content']
+
     form_class = CommentForm
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        # form.instance.idea = Comment.objects.filter(id = self.kwargs['pk']).first().idea
         form.instance.idea = self.get_object().idea
         return super().form_valid(form)
 
@@ -117,8 +105,6 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return False
 
     def get_success_url(self):
-        
-        # user = get_object_or_404(User, username=self.kwargs.get('username'))
         return reverse_lazy('idea-detail', kwargs={'pk': self.get_object().idea.id})
 
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
